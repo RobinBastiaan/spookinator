@@ -1,0 +1,33 @@
+:root {
+    /**
+     * Change these colors for easy portability to other (PBworks) color themes. Currently a YELLOW-THEME is used.
+     * Use a tool like e.g. https://codepen.io/sosuke/pen/Pjoqqp to convert a hex color to a CSS filter to be used on SVG images.
+     *
+     * Example GREEN-THEME:
+     * - main-color: #5FA644;
+     * - highlight-color: #DEEFD1;
+     * - highlight-color-as-filter: invert(86%) sepia(14%) saturate(284%) hue-rotate(51deg) brightness(104%) contrast(97%);
+     * - hover-color-as-filter: invert(18%) sepia(77%) saturate(445%) hue-rotate(59deg) brightness(87%) contrast(85%);
+     *
+     * Example RED-THEME:
+     * - main-color: #D66666;
+     * - highlight-color: #FAC4C3;
+     * - highlight-color-as-filter: invert(81%) sepia(10%) saturate(820%) hue-rotate(314deg) brightness(101%) contrast(96%);
+     * - hover-color-as-filter: invert(8%) sepia(74%) saturate(3662%) hue-rotate(351deg) brightness(84%) contrast(95%);
+     */
+    --main-color: #fccf2d;
+    --highlight-color: #FEE9A0;
+    --highlight-color-as-filter: invert(93%) sepia(19%) saturate(857%) hue-rotate(335deg) brightness(103%) contrast(99%);
+    --hover-color-as-filter: invert(73%) sepia(85%) saturate(416%) hue-rotate(355deg) brightness(50%) contrast(98%);
+
+    --text-color: #444;
+    --text-color-as-filter: invert(0%) sepia(0%) saturate(7482%) hue-rotate(96deg) brightness(94%) contrast(104%);
+}
+
+input {
+    accent-color: white;
+}
+
+#spookinator__source-table { /* only show the source table when editing the page */
+    display: none;
+}
