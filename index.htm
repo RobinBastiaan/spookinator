@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>Inspirator</title>
+    <title>Spookinator</title>
     <link rel="icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
@@ -25,7 +25,7 @@
     <!-- The source table -->
     <!-- This table contains all data and is used by Javascript for a dynamic filter system. -->
     <!-- Users can edit the source table themselves, making it convenient for non-developers to update the Spookinator. -->
-    <table id="spookinator__source-table">
+    <table id="spookinator__source-table" js-spookinator-source-table>
         <tbody>
 
         <tr>
@@ -360,9 +360,9 @@
         <!-- TODO add filters -->
     </article>
 
-    <h4 id="spookinator__found-container"><span id="found" class="update-counter"></span></h4>
+    <h4 id="spookinator__counter"><span id="found" class="spookinator__counter--update-counter"></span></h4>
 
-    <div id="spookinator__results">
+    <div id="spookinator__results" js-spookinator-results>
         <!-- TODO add results -->
     </div>
 

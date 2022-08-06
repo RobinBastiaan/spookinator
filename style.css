@@ -28,6 +28,63 @@ input {
     accent-color: white;
 }
 
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
+}
+
 #spookinator__source-table { /* only show the source table when editing the page */
     display: none;
+}
+
+#spookinator__results {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 960px;
+    overflow: hidden;
+    color: var(--text-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.spookinator__item {
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    background: var(--main-color);
+    flex-grow: 1;
+}
+
+.spookinator__item h4 {
+    margin: 0;
+}
+
+.spookinator__item img {
+    margin: 0 1px;
+    height: 16px;
+    width: 16px;
+    vertical-align: text-top;
+}
+
+.spookinator__item:hover {
+    background: var(--highlight-color);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.spookinator__item--hidden {
+    display: none;
+}
+
+#spookinator__footer {
+    font-weight: lighter;
+    font-style: italic;
+    font-size: x-small;
+    margin: 10px;
+    text-align: right;
 }
