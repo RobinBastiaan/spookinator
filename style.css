@@ -40,6 +40,16 @@ input {
     display: none;
 }
 
+#spookinator__item-counter {
+    background: var(--highlight-color);
+    text-align: center;
+    width: 150px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    height: 20px;
+}
+
 #spookinator__results {
     position: relative;
     margin: 0 auto;
@@ -87,4 +97,32 @@ input {
     font-size: x-small;
     margin: 10px;
     text-align: right;
+}
+
+/* Animations */
+.update-counter {
+    animation: update-counter-animation 0.5s forwards;
+}
+
+@keyframes update-counter-animation {
+    from {
+        opacity: 0;
+        font-size: 14px;
+    }
+    to {
+        opacity: 1;
+        font-size: 16px;
+    }
+}
+
+.programType {
+    animation: program-type-animation 1s;
+}
+
+@keyframes program-type-animation {
+    from {
+        background: var(--highlight-color);
+    }
+    to {
+    }
 }

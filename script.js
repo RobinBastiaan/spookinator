@@ -33,7 +33,7 @@ class itemClass {
         htmlString += `<span class="left">`;
         htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn}<br>`;
         if (this.amountOfPersons) {
-            htmlString += `<img alt="Staf nodig" title="Staf nodig" src="src/amount-of-persons.svg">`;
+            htmlString += `<img alt="${this.amountOfPersons.length} Staf nodig" title="${this.amountOfPersons.length} Staf nodig" src="src/amount-of-persons.svg">`;
         }
         if (this.needsElectricity) {
             htmlString += `<img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">`;
@@ -130,9 +130,18 @@ function setItems() {
     document.querySelector('[js-spookinator-results]').innerHTML += resultHTML;
 }
 
+function showCounter() {
+    let foundElement = document.querySelector('[js-item-counter]');
+    foundElement.innerHTML = (foundItems.length).toString() + ' resultaten';
+    foundElement.classList.remove('update-counter');
+    void foundElement.offsetWidth; // trigger reflow to start the css animation
+    foundElement.classList.add('update-counter');
+}
+
 // initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     setItems();
+    showCounter();
 });
 //</script>
 
