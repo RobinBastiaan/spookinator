@@ -357,13 +357,76 @@
 
     <!-- Begin Main -->
     <article id="spookinator__filters">
-        <!-- TODO add filters -->
+        <section class="spookinator__filter-section">
+            <h4>Realisatietijd</h4>
+            <span class="spookinator__filter-section--icon-range">
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="preparation-time-x">
+                    <img alt="Weinig voorbereidingstijd" title="Weinig voorbereidingstijd" src="src/preparation-time.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="preparation-time-xx">
+                    <img alt="Gemiddeld voorbereidingstijd" title="Gemiddeld voorbereidingstijd" src="src/preparation-time.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="preparation-time-xxx">
+                    <img alt="Veel voorbereidingstijd" title="Veel voorbereidingstijd" src="src/preparation-time.svg">
+                </label>
+            </span>
+            <span class="spookinator__filter-section--icon-range">
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="build-up-time-x">
+                    <img alt="Weinig opbouwtijd" title="Weinig opbouwtijd" src="src/build-up-time.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="build-up-time-xx">
+                    <img alt="Gemiddeld opbouwtijd" title="Gemiddeld opbouwtijd" src="src/build-up-time.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="build-up-time-xxx">
+                    <img alt="Veel opbouwtijd" title="Veel opbouwtijd" src="src/build-up-time.svg">
+                </label>
+            </span>
+        </section>
+
+        <section class="spookinator__filter-section">
+            <h4>Speciale benodigdheden</h4>
+            <label class="label-checkbox">
+                <input class="hidden-checkbox" type="checkbox" name="special" checked value="amount-of-persons">
+                <img alt="Staf nodig" title="Staf nodig" src="src/amount-of-persons.svg">
+            </label>
+            <label class="label-checkbox">
+                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-electricity">
+                <img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">
+            </label>
+            <label class="label-checkbox">
+                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-dressing-clothes">
+                <img alt="Kleding nodig" title="Kleding nodig" src="src/needs-dressing-clothes.svg">
+            </label>
+            <label class="label-checkbox">
+                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-face-paint">
+                <img alt="Schmink nodig" title="Schmink nodig" src="src/needs-face-paint.svg">
+            </label>
+            <label class="label-checkbox">
+                <input class="hidden-checkbox" type="checkbox" name="special" checked value="is-portable">
+                <img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg">
+            </label>
+        </section>
+
+        <section class="spookinator__filter-section">
+            <h4>Minimale herhalingsperiode</h4>
+            <div class="checkbox-container" style="padding-top: 15px;">
+                <input id="date" class="spookinator__input--range" type="range" name="points" min="0" max="5" value="0" step="1"
+                       onmousemove="showSliderValue(this.value)">
+                <output js-spookinator-range>0 jaar</output>
+            </div>
+        </section>
     </article>
 
     <h4 id="spookinator__item-counter"><span js-item-counter></span></h4>
 
     <div id="spookinator__results" js-spookinator-results>
-        <!-- TODO add results -->
+        <!-- Will be filled with results by JS. -->
     </div>
 
     <div id="spookinator__footer">Gemaakt door Robin</div>

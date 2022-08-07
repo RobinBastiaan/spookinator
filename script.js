@@ -2,6 +2,7 @@
 //<!-- Since the platform does not allow large file-size within a plugins-widget, the script of the Spookinator has to be placed in multiple smaller plugins-widgets. -->
 
 //<script>/*0*/// Global initial values
+let items = [];
 let foundItems = [];
 
 class itemClass {
@@ -56,7 +57,7 @@ class itemClass {
         });
         htmlString += `<br>`;
         Array.from({length: this.buildUpTime.length}, (x, i) => {
-            htmlString += `<img class="right" alt="${this.rangeText(this.buildUpTime.length)} opbouw tijd" title="${this.rangeText(this.buildUpTime.length)} opbouw tijd" src="src/build-up-time.svg">`;
+            htmlString += `<img class="right" alt="${this.rangeText(this.buildUpTime.length)} opbouwtijd" title="${this.rangeText(this.buildUpTime.length)} opbouwtijd" src="src/build-up-time.svg">`;
         });
         htmlString += `</span>`;
 
@@ -108,7 +109,7 @@ function setItems() {
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
         for (let column = 0; column <= 10; column++) {
-            if (column === 2 || column === 3) { // only columns 2 and 3 can have multiple entries separated by commas
+            if (column === 2 || column === 3) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
@@ -116,6 +117,7 @@ function setItems() {
                 valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
             }
         }
+        console.log(valueToPush)
 
         // filter items without a name
         if (!valueToPush[0]) {
@@ -123,11 +125,81 @@ function setItems() {
         }
 
         let item = new itemClass(i, ...valueToPush);
-        foundItems.push(item);
+        items.push(item);
         resultHTML += item.html;
     }
 
     document.querySelector('[js-spookinator-results]').innerHTML += resultHTML;
+}
+
+// search for the programs
+function search() {
+    foundItems = [];
+
+    let preparationTimeX = document.querySelector('input[value="preparation-time-x"]').checked;
+    let preparationTimeXX = document.querySelector('input[value="preparation-time-xx"]').checked;
+    let preparationTimeXXX = document.querySelector('input[value="preparation-time-xxx"]').checked;
+    let buildUpTimeX = document.querySelector('input[value="build-up-time-x"]').checked;
+    let buildUpTimeXX = document.querySelector('input[value="build-up-time-xx"]').checked;
+    let buildUpTimeXXX = document.querySelector('input[value="build-up-time-xxx"]').checked;
+
+    let amountOfPersons = document.querySelector('input[value="amount-of-persons"]').checked;
+    let needsElectricity = document.querySelector('input[value="needs-electricity"]').checked;
+    let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').checked;
+    let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').checked;
+    let isPortable = document.querySelector('input[value="is-portable"]').checked;
+
+    let when = document.getElementById('date').value;
+
+    // cycle through all items and only add those that match the search parameters
+    for (const item of items) {
+        if (!preparationTimeX && item.preparationTime.length === 1 || !preparationTimeXX && item.preparationTime.length === 2 || !preparationTimeXXX && item.preparationTime.length === 3) {
+            continue;
+        }
+        if (!buildUpTimeX && item.buildUpTime.length === 1 || !buildUpTimeXX && item.buildUpTime.length === 2 || !buildUpTimeXXX && item.buildUpTime.length === 3) {
+            continue;
+        }
+        if (!amountOfPersons && item.amountOfPersons) {
+            continue;
+        }
+        if (!needsElectricity && item.needsElectricity) {
+            continue;
+        }
+        if (!needsDressingClothes && item.needsDressingClothes) {
+            continue;
+        }
+        if (!needsFacePaint && item.needsFacePaint) {
+            continue;
+        }
+        if (!isPortable && item.isPortable) {
+            continue;
+        }
+        if (item.executedIn - (new Date()).getFullYear() < when && item.executedIn !== '*') { // check if the program has right date
+            continue;
+        }
+
+        foundItems.push(item);
+    }
+
+    // show the result
+    showItems();
+    showCounter();
+}
+
+//<script>/*2*/// display the programs with their values
+function showItems() {
+    if (!foundItems) {
+        return;
+    }
+
+    // show the programs on this page
+    for (const item of items) {
+        if (foundItems.includes(item)) {
+            show(item.id);
+        } else {
+            hide(item.id);
+        }
+    }
 }
 
 function showCounter() {
@@ -138,10 +210,24 @@ function showCounter() {
     foundElement.classList.add('update-counter');
 }
 
+// show the correct value of the slider-range
+function showSliderValue(newValue) {
+    let yearText = newValue === '0' || newValue === '1' ? ' jaar' : ' jaren';
+    document.querySelector('[js-spookinator-range]').innerHTML = newValue + yearText;
+}
+
 // initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     setItems();
-    showCounter();
+    search();
+
+    // add search event listeners
+    let clickableSearchElements = document.querySelectorAll("input");
+    for (let i = 0; i < clickableSearchElements.length; i++) {
+        clickableSearchElements[i].addEventListener('click', (e) => {
+            search();
+        });
+    }
 });
 //</script>
 

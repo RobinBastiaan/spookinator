@@ -76,6 +76,11 @@ input {
     margin: 0;
 }
 
+img {
+    height: 32px;
+    width: 32px;
+}
+
 .spookinator__item img {
     margin: 0 1px;
     height: 16px;
@@ -93,12 +98,77 @@ input {
     display: none;
 }
 
+#spookinator__filters {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 960px;
+    overflow: hidden;
+    color: var(--text-color);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.spookinator__filter-section {
+    padding: 10px;
+    min-width: 250px;
+    background: var(--main-color);
+    flex-grow: 1;
+    text-align: center;
+}
+
+.spookinator__filter-section--icon-range {
+    margin: 0 10px;
+}
+
+.spookinator__filter-section h4 {
+    background: var(--highlight-color);
+    margin: 0;
+    padding: 5px 10px;
+    border-radius: 10px;
+}
+
 #spookinator__footer {
     font-weight: lighter;
     font-style: italic;
     font-size: x-small;
     margin: 10px;
     text-align: right;
+}
+
+.hidden-checkbox {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 99999;
+    opacity: 0;
+}
+
+label.label-checkbox {
+    display: inline-block;
+    padding: 4px;
+    margin: 4px 0;
+}
+
+.label-checkbox > input[type='checkbox'] + img {
+    filter: var(--highlight-color-as-filter);
+}
+
+.label-checkbox > input[type='checkbox']:checked + img {
+    filter: var(--text-color-as-filter);
+}
+
+/* Slightly lighter hover color to indicate affordance */
+.label-checkbox > input[type='checkbox']:hover + img {
+    filter: var(--hover-color-as-filter);
+}
+
+.inspirator__input--range {
+    width: 190px;
+    margin-right: 15px;
 }
 
 /* Toggle */
