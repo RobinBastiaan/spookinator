@@ -1,4 +1,6 @@
 :root {
+    scrollbar-gutter: stable;
+
     /**
      * Change these colors for easy portability to other (PBworks) color themes. Currently a YELLOW-THEME is used.
      * Use a tool like e.g. https://codepen.io/sosuke/pen/Pjoqqp to convert a hex color to a CSS filter to be used on SVG images.
@@ -99,6 +101,35 @@ input {
     text-align: right;
 }
 
+/* Toggle */
+.spookinator__toggle {
+    cursor: pointer;
+}
+
+.spookinator__toggle--hidden-div {
+    display: none;
+    max-height: 0;
+}
+
+.spookinator__toggle:focus .spookinator__toggle--hidden-div {
+    display: block;
+    max-height: 200px;
+    animation: toggle-animation 0.5s both ease-in-out;
+}
+
+@keyframes toggle-animation {
+    from {
+        display: none;
+        max-height: 0;
+        color: var(--highlight-color);
+    }
+    to {
+        display: block;
+        max-height: 2000px;
+        color: var(--text-color);
+    }
+}
+
 /* Animations */
 .update-counter {
     animation: update-counter-animation 0.5s forwards;
@@ -112,17 +143,5 @@ input {
     to {
         opacity: 1;
         font-size: 16px;
-    }
-}
-
-.programType {
-    animation: program-type-animation 1s;
-}
-
-@keyframes program-type-animation {
-    from {
-        background: var(--highlight-color);
-    }
-    to {
     }
 }

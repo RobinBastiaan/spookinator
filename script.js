@@ -26,7 +26,7 @@ class itemClass {
         let htmlString;
 
         // display main information
-        htmlString = `<div id="${this.id}" class="spookinator__item">`;
+        htmlString = `<div id="${this.id}" class="spookinator__item spookinator__toggle" tabindex="1">`;
         htmlString += `<h4>${displayName}</h4>`;
 
         // display icons
@@ -52,7 +52,7 @@ class itemClass {
         // display ranged icons
         htmlString += `<span>`;
         Array.from({length: this.preparationTime.length}, (x, i) => {
-            htmlString += `<img class="right" alt="${this.rangeText(this.buildUpTime.length)} voorbereidingstijd" title="${this.rangeText(this.buildUpTime.length)} voorbereidingstijd" src="src/preparation-time.svg">`;
+            htmlString += `<img class="right" alt="${this.rangeText(this.preparationTime.length)} voorbereidingstijd" title="${this.rangeText(this.preparationTime.length)} voorbereidingstijd" src="src/preparation-time.svg">`;
         });
         htmlString += `<br>`;
         Array.from({length: this.buildUpTime.length}, (x, i) => {
@@ -61,10 +61,10 @@ class itemClass {
         htmlString += `</span>`;
 
         // display additional information
-        htmlString += `<br><hr><span class="spookinator__item--hidden">`;
-        htmlString += `<p>${this.description}</p>`;
+        htmlString += `<div class="spookinator__toggle--hidden-div">`;
+        htmlString += `<br><p>${this.description}</p>`;
         htmlString += this.requirements.join(', ');
-        htmlString += `</span>`;
+        htmlString += `</div>`;
 
         htmlString += `</div>`;
 
