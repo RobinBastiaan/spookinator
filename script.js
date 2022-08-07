@@ -117,7 +117,6 @@ function setItems() {
                 valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
             }
         }
-        console.log(valueToPush)
 
         // filter items without a name
         if (!valueToPush[0]) {
@@ -174,7 +173,7 @@ function search() {
         if (!isPortable && item.isPortable) {
             continue;
         }
-        if (item.executedIn - (new Date()).getFullYear() < when && item.executedIn !== '*') { // check if the program has right date
+        if (+item.executedIn[0] + +when >= (new Date()).getFullYear() + 1 && item.executedIn[0] !== '*') { // check if the program has right date
             continue;
         }
 
