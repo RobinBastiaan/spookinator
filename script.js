@@ -123,10 +123,13 @@ function setItems() {
             continue;
         }
 
-        let item = new itemClass(i, ...valueToPush);
-        items.push(item);
-        resultHTML += item.html;
+        items.push(new itemClass(i, ...valueToPush));
     }
+
+    // sort alphabetically
+    items.sort((a, b) => a.name.localeCompare(b.name));
+
+    resultHTML += items.map(item => item.html).join(' ');
 
     document.querySelector('[js-spookinator-results]').innerHTML += resultHTML;
 }
