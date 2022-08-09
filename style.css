@@ -65,8 +65,9 @@ input {
 }
 
 .spookinator__item {
-    padding: 10px;
-    margin: 10px;
+    padding: 6px;
+    margin: 3px;
+    line-height: 1.5em;
     width: 200px;
     background: var(--main-color);
     flex-grow: 1;
@@ -184,6 +185,7 @@ label.label-checkbox {
 .spookinator__toggle:focus .spookinator__toggle--hidden-div {
     display: block;
     max-height: 200px;
+    line-height: 1em;
     animation: toggle-animation 0.5s both ease-in-out;
 }
 
