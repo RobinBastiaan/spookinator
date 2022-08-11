@@ -64,7 +64,7 @@ class itemClass {
         // display additional information
         htmlString += `<div class="spookinator__toggle--hidden-div">`;
         htmlString += `<br><p>${this.description}</p>`;
-        htmlString += this.requirements.join(', ');
+        htmlString += ' &bull; ' + this.requirements.join(' &bull; ');
         htmlString += `</div>`;
 
         htmlString += `</div>`;
