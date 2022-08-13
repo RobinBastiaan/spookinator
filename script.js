@@ -4,6 +4,7 @@
 //<script>/*0*/// Global initial values
 let items = [];
 let foundItems = [];
+let maxRange = 3;
 
 class itemClass {
     constructor(id, name, description, requirements, executedIn, amountOfPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
@@ -89,6 +90,15 @@ function sanitizeInput(input) {
     return input.trim().replace('&amp;', '&').replace('&nbsp;', '');
 }
 
+// additional sanitation rules for ranged input
+function sanitizeRangeInput(input) {
+    let regexp = new RegExp("[^x]", "g"); // keep only the character "x"
+    let sanitizedInput = sanitizeInput(input).toLowerCase().replace(regexp, '');
+
+    // ensure a minimum range of 1 and a maximum range of maxRange
+    return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
+}
+
 //</script>
 
 //<script>/*1*/// display the items with their values
@@ -100,8 +110,7 @@ function hide(id) {
     document.getElementById(id).classList.add('spookinator__item--hidden');
 }
 
-// get all items given in the html
-function setItems() {
+function retrieveItemsFromDocument() {
     let children = document.querySelector('[js-spookinator-source-table]').children[0];
     let len = children.childElementCount;
     let resultHTML = '';
@@ -113,6 +122,8 @@ function setItems() {
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
+            } else if (column === 5 || column === 6) { // these columns contain a ranged input
+                valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
             } else {
                 valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
             }
@@ -220,7 +231,7 @@ function showSliderValue(newValue) {
 
 // initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
-    setItems();
+    retrieveItemsFromDocument();
     search();
 
     // add search event listeners
