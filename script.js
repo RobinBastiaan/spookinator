@@ -29,11 +29,11 @@ class itemClass {
 
         // display main information
         htmlString = `<div id="${this.id}" class="spookinator__item spookinator__toggle" tabindex="1">`;
-        htmlString += `<h4>${displayName}</h4>`;
+        htmlString += `<h4>${displayName.charAt(0).toUpperCase() + displayName.slice(1)}</h4>`;
 
         // display icons
         htmlString += `<span class="left">`;
-        htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn}<br>`;
+        htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
         if (this.amountOfPersons) {
             htmlString += `<img alt="${this.amountOfPersons.length} Staf nodig" title="${this.amountOfPersons.length} Staf nodig" src="src/amount-of-persons.svg">`;
         }
