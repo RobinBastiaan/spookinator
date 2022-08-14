@@ -56,7 +56,6 @@ input {
     position: relative;
     margin: 0 auto;
     padding: 0;
-    max-width: 960px;
     overflow: hidden;
     color: var(--text-color);
     display: flex;
@@ -68,9 +67,14 @@ input {
     padding: 6px;
     margin: 3px;
     line-height: 1.5em;
-    width: 200px;
+    width: 250px;
     background: var(--main-color);
     flex-grow: 1;
+}
+
+.spookinator__item:focus {
+    width: 525px;
+    background: var(--highlight-color);
 }
 
 .spookinator__item h4 {
