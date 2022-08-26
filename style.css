@@ -49,7 +49,6 @@ input {
     margin: 10px auto;
     padding: 10px;
     border-radius: 15px;
-    height: 20px;
 }
 
 #spookinator__results {
@@ -86,7 +85,8 @@ img {
     width: 32px;
 }
 
-.spookinator__item img {
+.spookinator__item img,
+#spookinator__item-counter img {
     margin: 0 1px;
     height: 16px;
     width: 16px;
@@ -177,16 +177,19 @@ label.label-checkbox {
 }
 
 /* Toggle */
-.spookinator__toggle {
+.spookinator__toggle,
+#spookinator__item-counter {
     cursor: pointer;
 }
 
-.spookinator__toggle--hidden-div {
+.spookinator__toggle--hidden-div,
+#spookinator__item-counter__stats {
     display: none;
     max-height: 0;
 }
 
-.spookinator__toggle:focus .spookinator__toggle--hidden-div {
+.spookinator__toggle:focus .spookinator__toggle--hidden-div,
+#spookinator__item-counter:focus #spookinator__item-counter__stats {
     display: block;
     max-height: 200px;
     line-height: 1em;

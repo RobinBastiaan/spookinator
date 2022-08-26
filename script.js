@@ -217,9 +217,48 @@ function showItems() {
 
 function showCounter() {
     let foundElement = document.querySelector('[js-item-counter]');
-    foundElement.innerHTML = (foundItems.length).toString() + ' resultaten';
+    let foundItemsCount = foundItems.length;
+
+    let lowPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 1).length;
+    let lowBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 1).length;
+    let mediumPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 2).length;
+    let mediumBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 2).length;
+    let highPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 3).length;
+    let highBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 3).length;
+    let needsPersonsCount = foundItems.filter(x => x.amountOfPersons.length >= 1).length;
+    let needsElectricityCount = foundItems.filter(x => x.needsElectricity).length;
+    let needsDressingClothesCount = foundItems.filter(x => x.needsDressingClothes).length;
+    let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
+    let isPortableCount = foundItems.filter(x => x.isPortable).length;
+
+    foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
+        `<span id="spookinator__item-counter__stats">` +
+        `<br><span><img alt="Voorbereidingstijd" title="Voorbereidingstijd" src="src/preparation-time.svg"> ` +
+        `${lowPreparationTimeCount} / ${mediumPreparationTimeCount} / ${highPreparationTimeCount}` +
+        `</span>` +
+        `<br><span><img alt="Opbouwtijd" title="Opbouwtijd" src="src/build-up-time.svg"> ` +
+        `${lowBuildUpTimeCount} / ${mediumBuildUpTimeCount} / ${highBuildUpTimeCount}` +
+        `</span>` +
+        `<br><span><img alt="Staf nodig" title="Staf nodig" src="src/amount-of-persons.svg"> ` +
+        `<meter value="${needsPersonsCount}" max="${foundItemsCount}">${needsPersonsCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg"> ` +
+        `<meter value="${needsElectricityCount}" max="${foundItemsCount}">${needsElectricityCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Kleding nodig" title="Kleding nodig" src="src/needs-dressing-clothes.svg"> ` +
+        `<meter value="${needsDressingClothesCount}" max="${foundItemsCount}">${needsDressingClothesCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Schmink nodig" title="Schmink nodig" src="src/needs-face-paint.svg"> ` +
+        `<meter value="${needsFacePaintCount}" max="${foundItemsCount}">${needsFacePaintCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg"> ` +
+        `<meter value="${isPortableCount}" max="${foundItemsCount}">${isPortableCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `</span>`;
+
+    // trigger reflow to start the css animation
     foundElement.classList.remove('update-counter');
-    void foundElement.offsetWidth; // trigger reflow to start the css animation
+    void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
 
