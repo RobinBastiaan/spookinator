@@ -73,7 +73,7 @@ input {
 }
 
 .spookinator__item:focus {
-    width: 525px;
+    width: 538px;
     background: var(--highlight-color);
 }
 
