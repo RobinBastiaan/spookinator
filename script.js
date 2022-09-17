@@ -7,13 +7,13 @@ let foundItems = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, executedIn, amountOfPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
+    constructor(id, name, description, requirements, executedIn, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
         this.executedIn = executedIn;
-        this.amountOfPersons = amountOfPersons;
+        this.needsPersons = needsPersons;
         this.preparationTime = preparationTime;
         this.buildUpTime = buildUpTime;
         this.needsElectricity = needsElectricity;
@@ -34,8 +34,8 @@ class itemClass {
         // display icons
         htmlString += `<span class="left">`;
         htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
-        if (this.amountOfPersons) {
-            htmlString += `<img alt="${this.amountOfPersons.length} Staf nodig" title="${this.amountOfPersons.length} Staf nodig" src="src/amount-of-persons.svg">`;
+        if (this.needsPersons) {
+            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-persons.svg">`;
         }
         if (this.needsElectricity) {
             htmlString += `<img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">`;
@@ -156,7 +156,7 @@ function search() {
     let buildUpTimeXX = document.querySelector('input[value="build-up-time-xx"]').checked;
     let buildUpTimeXXX = document.querySelector('input[value="build-up-time-xxx"]').checked;
 
-    let amountOfPersons = document.querySelector('input[value="amount-of-persons"]').checked;
+    let needsPersons = document.querySelector('input[value="needs-persons"]').checked;
     let needsElectricity = document.querySelector('input[value="needs-electricity"]').checked;
     let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').checked;
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').checked;
@@ -172,7 +172,7 @@ function search() {
         if (!buildUpTimeX && item.buildUpTime.length === 1 || !buildUpTimeXX && item.buildUpTime.length === 2 || !buildUpTimeXXX && item.buildUpTime.length === 3) {
             continue;
         }
-        if (!amountOfPersons && item.amountOfPersons) {
+        if (!needsPersons && item.needsPersons) {
             continue;
         }
         if (!needsElectricity && item.needsElectricity) {
@@ -225,7 +225,7 @@ function showCounter() {
     let mediumBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 2).length;
     let highPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 3).length;
     let highBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 3).length;
-    let needsPersonsCount = foundItems.filter(x => x.amountOfPersons.length >= 1).length;
+    let needsPersonsCount = foundItems.filter(x => x.needsPersons.length >= 1).length;
     let needsElectricityCount = foundItems.filter(x => x.needsElectricity).length;
     let needsDressingClothesCount = foundItems.filter(x => x.needsDressingClothes).length;
     let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
@@ -239,7 +239,7 @@ function showCounter() {
         `<br><span><img alt="Opbouwtijd" title="Opbouwtijd" src="src/build-up-time.svg"> ` +
         `${lowBuildUpTimeCount} / ${mediumBuildUpTimeCount} / ${highBuildUpTimeCount}` +
         `</span>` +
-        `<br><span><img alt="Staf nodig" title="Staf nodig" src="src/amount-of-persons.svg"> ` +
+        `<br><span><img alt="Staf nodig" title="Staf nodig" src="src/needs-persons.svg"> ` +
         `<meter value="${needsPersonsCount}" max="${foundItemsCount}">${needsPersonsCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg"> ` +
