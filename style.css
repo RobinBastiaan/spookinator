@@ -22,6 +22,11 @@
     --highlight-color-as-filter: invert(93%) sepia(19%) saturate(857%) hue-rotate(335deg) brightness(103%) contrast(99%);
     --hover-color-as-filter: invert(73%) sepia(85%) saturate(416%) hue-rotate(355deg) brightness(50%) contrast(98%);
 
+    --on-color-as-filter: invert(49%) sepia(92%) saturate(2016%) hue-rotate(86deg) brightness(80%) contrast(126%);
+    --on-hover-color-as-filter: invert(49%) sepia(92%) saturate(201%) hue-rotate(86deg) brightness(100%) contrast(126%);
+    --off-color-as-filter: invert(16%) sepia(67%) saturate(7028%) hue-rotate(358deg) brightness(80%) contrast(121%);
+    --off-hover-color-as-filter: invert(16%) sepia(67%) saturate(3502%) hue-rotate(358deg) brightness(100%) contrast(121%);
+
     --text-color: #444;
     --text-color-as-filter: invert(0%) sepia(0%) saturate(7482%) hue-rotate(96deg) brightness(94%) contrast(104%);
 }
@@ -162,13 +167,30 @@ label.label-checkbox {
     filter: var(--highlight-color-as-filter);
 }
 
-.label-checkbox > input[type='checkbox']:checked + img {
+.label-checkbox > input[type='checkbox']:checked + img,
+.label-checkbox > input[type='checkbox'][state='all'] + img {
     filter: var(--text-color-as-filter);
+}
+
+.label-checkbox > input[type='checkbox'][state='on'] + img {
+    filter: var(--on-color-as-filter);
+}
+
+.label-checkbox > input[type='checkbox'][state='off'] + img {
+    filter: var(--off-color-as-filter);
 }
 
 /* Slightly lighter hover color to indicate affordance */
 .label-checkbox > input[type='checkbox']:hover + img {
     filter: var(--hover-color-as-filter);
+}
+
+.label-checkbox > input[type='checkbox'][state='on']:hover + img {
+    filter: var(--on-hover-color-as-filter);
+}
+
+.label-checkbox > input[type='checkbox'][state='off']:hover + img {
+    filter: var(--off-hover-color-as-filter);
 }
 
 .inspirator__input--range {

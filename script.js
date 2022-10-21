@@ -156,11 +156,12 @@ function search() {
     let buildUpTimeXX = document.querySelector('input[value="build-up-time-xx"]').checked;
     let buildUpTimeXXX = document.querySelector('input[value="build-up-time-xxx"]').checked;
 
-    let needsPersons = document.querySelector('input[value="needs-persons"]').checked;
-    let needsElectricity = document.querySelector('input[value="needs-electricity"]').checked;
-    let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').checked;
-    let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').checked;
-    let isPortable = document.querySelector('input[value="is-portable"]').checked;
+    // The following input elements are a three-way checkbox.
+    let needsPersons = document.querySelector('input[value="needs-persons"]').getAttribute('state');
+    let needsElectricity = document.querySelector('input[value="needs-electricity"]').getAttribute('state');
+    let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').getAttribute('state');
+    let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
+    let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
 
     let when = document.getElementById('date').value;
 
@@ -172,19 +173,19 @@ function search() {
         if (!buildUpTimeX && item.buildUpTime.length === 1 || !buildUpTimeXX && item.buildUpTime.length === 2 || !buildUpTimeXXX && item.buildUpTime.length === 3) {
             continue;
         }
-        if (!needsPersons && item.needsPersons) {
+        if (needsPersons === 'on' && !item.needsPersons || needsPersons === 'off' && item.needsPersons) {
             continue;
         }
-        if (!needsElectricity && item.needsElectricity) {
+        if (needsElectricity === 'on' && !item.needsElectricity || needsElectricity === 'off' && item.needsElectricity) {
             continue;
         }
-        if (!needsDressingClothes && item.needsDressingClothes) {
+        if (needsDressingClothes === 'on' && !item.needsDressingClothes || needsDressingClothes === 'off' && item.needsDressingClothes) {
             continue;
         }
-        if (!needsFacePaint && item.needsFacePaint) {
+        if (needsFacePaint === 'on' && !item.needsFacePaint || needsFacePaint === 'off' && item.needsFacePaint) {
             continue;
         }
-        if (!isPortable && item.isPortable) {
+        if (isPortable === 'on' && !item.isPortable || isPortable === 'off' && item.isPortable) {
             continue;
         }
         if (+item.executedIn[0] + +when >= (new Date()).getFullYear() + 1 && item.executedIn[0] !== '*') { // check if the program has right date
@@ -277,10 +278,28 @@ window.addEventListener('DOMContentLoaded', () => {
     let clickableSearchElements = document.querySelectorAll("input");
     for (let i = 0; i < clickableSearchElements.length; i++) {
         clickableSearchElements[i].addEventListener('click', (e) => {
+            if (e.target.getAttribute('state')) {
+                // loop through each state in order: on => off => all => ...
+                switch (e.target.getAttribute('state')) {
+                    case 'on':
+                        e.target.setAttribute('state', 'off');
+                        break;
+                    case 'off':
+                        e.target.setAttribute('state', 'all');
+                        break;
+                    default:
+                        e.target.setAttribute('state', 'on');
+                        break;
+                }
+            }
+
             search();
         });
     }
 });
 //</script>
 
-module.exports = {itemClass}
+//module.exports = {itemClass}
+
+var checkbox = document.getElementsByClassName("some-checkbox");
+checkbox.indeterminate = true;
