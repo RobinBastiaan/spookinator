@@ -1364,7 +1364,7 @@
     <article id="spookinator__filters">
         <section class="spookinator__filter-section">
             <h4>Voorbereidingstijd / Opbouwtijd</h4>
-            <span class="spookinator__filter-section--icon-range">
+            <span class="flex">
                 <label class="label-checkbox">
                     <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="preparation-time-x">
                     <img alt="Weinig voorbereidingstijd" title="Weinig voorbereidingstijd" src="src/preparation-time.svg">
@@ -1377,8 +1377,7 @@
                     <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="preparation-time-xxx">
                     <img alt="Veel voorbereidingstijd" title="Veel voorbereidingstijd" src="src/preparation-time.svg">
                 </label>
-            </span>
-            <span class="spookinator__filter-section--icon-range">
+                <span style="width:20px"></span>
                 <label class="label-checkbox">
                     <input class="hidden-checkbox" type="checkbox" name="realisation-time" checked value="build-up-time-x">
                     <img alt="Weinig opbouwtijd" title="Weinig opbouwtijd" src="src/build-up-time.svg">
@@ -1396,26 +1395,28 @@
 
         <section class="spookinator__filter-section">
             <h4>Speciale benodigdheden</h4>
-            <label class="label-checkbox">
-                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-persons" state="all">
-                <img alt="Staf nodig" title="Staf nodig" src="src/needs-persons.svg">
-            </label>
-            <label class="label-checkbox">
-                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-electricity" state="all">
-                <img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">
-            </label>
-            <label class="label-checkbox">
-                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-dressing-clothes" state="all">
-                <img alt="Kleding nodig" title="Kleding nodig" src="src/needs-dressing-clothes.svg">
-            </label>
-            <label class="label-checkbox">
-                <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-face-paint" state="all">
-                <img alt="Schmink nodig" title="Schmink nodig" src="src/needs-face-paint.svg">
-            </label>
-            <label class="label-checkbox">
-                <input class="hidden-checkbox" type="checkbox" name="special" checked value="is-portable" state="all">
-                <img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg">
-            </label>
+            <div class="flex">
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-persons" state="all">
+                    <img alt="Staf nodig" title="Staf nodig" src="src/needs-persons.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-electricity" state="all">
+                    <img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-dressing-clothes" state="all">
+                    <img alt="Kleding nodig" title="Kleding nodig" src="src/needs-dressing-clothes.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="special" checked value="needs-face-paint" state="all">
+                    <img alt="Schmink nodig" title="Schmink nodig" src="src/needs-face-paint.svg">
+                </label>
+                <label class="label-checkbox">
+                    <input class="hidden-checkbox" type="checkbox" name="special" checked value="is-portable" state="all">
+                    <img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg">
+                </label>
+            </div>
         </section>
 
         <section class="spookinator__filter-section">
