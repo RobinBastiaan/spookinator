@@ -233,6 +233,7 @@ function showCounter() {
     let isPortableCount = foundItems.filter(x => x.isPortable).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
+        ` <img class="right" alt="Zie meer" src="src/down.svg">` +
         `<span id="spookinator__item-counter__stats">` +
         `<br><span><img alt="Voorbereidingstijd" title="Voorbereidingstijd" src="src/preparation-time.svg"> ` +
         `${lowPreparationTimeCount} / ${mediumPreparationTimeCount} / ${highPreparationTimeCount}` +
