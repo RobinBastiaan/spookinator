@@ -8,3 +8,9 @@ a haunted trail.
 ## Installation & Inner workings
 
 ## Preview
+
+![spookinator](https://user-images.githubusercontent.com/38226878/198893940-f47c81a8-f1b5-48dc-9edf-12c2bd6f0e93.PNG)
+
+<p align="center" width="100%">
+    <img width="10%" src="favicon.png?raw=true"> 
+</p>
