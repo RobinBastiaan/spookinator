@@ -98,7 +98,6 @@ function sanitizeRangeInput(input) {
     // ensure a minimum range of 1 and a maximum range of maxRange
     return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
 }
-
 //</script>
 
 //<script>/*1*/// display the items with their values
@@ -199,6 +198,7 @@ function search() {
     showItems();
     showCounter();
 }
+//</script>
 
 //<script>/*2*/// display the programs with their values
 function showItems() {
@@ -300,7 +300,4 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 //</script>
 
-//module.exports = {itemClass}
-
-var checkbox = document.getElementsByClassName("some-checkbox");
-checkbox.indeterminate = true;
+module.exports = {itemClass}
