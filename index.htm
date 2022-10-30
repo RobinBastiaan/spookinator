@@ -40,7 +40,7 @@
             <li>Gebruik bij "Voorbereidingstijd" en "Opbouwtijd" 1 tot 3 x'en.</li>
         </ul>
 
-        <table js-spookinator-source-table>
+        <table id="js-spookinator-source-table">
             <tbody>
 
             <tr>
@@ -2492,15 +2492,15 @@
             <div class="checkbox-container" style="padding-top: 15px;">
                 <input id="date" class="spookinator__input--range" type="range" name="points" min="0" max="5" value="0" step="1"
                        onmousemove="showSliderValue(this.value)">
-                <output js-spookinator-range>0 jaar</output>
+                <output id="js-spookinator-range">0 jaar</output>
             </div>
         </section>
     </article>
 
-    <h4 id="spookinator__item-counter" tabindex="1"><span js-item-counter></span></h4>
+    <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
 
-    <div id="spookinator__results" js-spookinator-results>
-        <!-- Will be filled with results by JS. -->
+    <div id="spookinator__results">
+        -<!-- Will be filled with results by JS. -->
     </div>
 
     <div id="spookinator__footer">Gemaakt door Robin</div>

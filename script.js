@@ -110,7 +110,7 @@ function hide(id) {
 }
 
 function retrieveItemsFromDocument() {
-    let children = document.querySelector('[js-spookinator-source-table]').children[0];
+    let children = document.querySelector('#js-spookinator-source-table').children[0];
     let len = children.childElementCount;
     let resultHTML = '';
 
@@ -141,7 +141,7 @@ function retrieveItemsFromDocument() {
 
     resultHTML += items.map(item => item.html).join(' ');
 
-    document.querySelector('[js-spookinator-results]').innerHTML += resultHTML;
+    document.querySelector('#spookinator__results').innerHTML += resultHTML;
 }
 
 // search for the programs
@@ -198,9 +198,7 @@ function search() {
     showItems();
     showCounter();
 }
-//</script>
 
-//<script>/*2*/// display the programs with their values
 function showItems() {
     if (!foundItems) {
         return;
@@ -215,9 +213,11 @@ function showItems() {
         }
     }
 }
+//</script>
 
+//<script>/*2*/// display the programs with their values
 function showCounter() {
-    let foundElement = document.querySelector('[js-item-counter]');
+    let foundElement = document.querySelector('#js-item-counter');
     let foundItemsCount = foundItems.length;
 
     let lowPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 1).length;
@@ -267,7 +267,7 @@ function showCounter() {
 // show the correct value of the slider-range
 function showSliderValue(newValue) {
     let yearText = newValue === '0' || newValue === '1' ? ' jaar' : ' jaren';
-    document.querySelector('[js-spookinator-range]').innerHTML = newValue + yearText;
+    document.querySelector('#js-spookinator-range').innerHTML = newValue + yearText;
 }
 
 // initial function calls and eventListeners

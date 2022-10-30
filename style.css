@@ -1,3 +1,4 @@
+/*<style>*//*0*/
 :root {
     scrollbar-gutter: stable;
 
@@ -148,7 +149,9 @@ img {
     margin: 10px;
     text-align: right;
 }
+/*</style>*/
 
+/*<style>*//*1*/
 .hidden-checkbox {
     display: block;
     position: absolute;
@@ -246,3 +249,4 @@ label.label-checkbox {
         font-size: 16px;
     }
 }
+/*</style>*/
