@@ -53,13 +53,13 @@ class itemClass {
 
         // display ranged icons
         htmlString += `<span>`;
-        Array.from({length: this.preparationTime.length}, (x, i) => {
+        for (let i = 0; i < this.preparationTime.length; i++) {
             htmlString += `<img class="right" alt="${this.rangeText(this.preparationTime.length)} voorbereidingstijd" title="${this.rangeText(this.preparationTime.length)} voorbereidingstijd" src="src/preparation-time.svg">`;
-        });
+        }
         htmlString += `<br>`;
-        Array.from({length: this.buildUpTime.length}, (x, i) => {
+        for (let i = 0; i < this.buildUpTime.length; i++) {
             htmlString += `<img class="right" alt="${this.rangeText(this.buildUpTime.length)} opbouwtijd" title="${this.rangeText(this.buildUpTime.length)} opbouwtijd" src="src/build-up-time.svg">`;
-        });
+        }
         htmlString += `</span>`;
 
         // display additional information
