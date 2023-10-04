@@ -258,6 +258,9 @@ function showCounter() {
         `</span>` +
         `</span>`;
 
+    // only show the ghost when there are no results
+    document.getElementById('ghost').classList.toggle('spookinator__item--hidden', foundItemsCount !== 0);
+
     // trigger reflow to start the css animation
     foundElement.classList.remove('update-counter');
     void foundElement.offsetWidth;
