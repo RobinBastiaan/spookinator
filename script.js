@@ -163,6 +163,8 @@ function search() {
     let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
 
     let when = document.getElementById('date').value;
+    // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
+    let search = document.getElementById('search').value.toLowerCase();
 
     // cycle through all items and only add those that match the search parameters
     for (const item of items) {
@@ -188,6 +190,10 @@ function search() {
             continue;
         }
         if (+item.executedIn[0] + +when >= (new Date()).getFullYear() + 1 && item.executedIn[0] !== '*') { // check if the program has right date
+            continue;
+        }
+        if (search && ! item.name.toLowerCase().includes(search) && ! item.description.toLowerCase().includes(search)
+                && ! item.requirements.join().toLowerCase().includes(search) && ! item.executedIn.join(',').includes(search)) {
             continue;
         }
 

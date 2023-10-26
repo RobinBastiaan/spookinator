@@ -2630,19 +2630,19 @@
                 <td>x</td>
             </tr>
             <!-- TODO add more data; 2007 and up already done. -->
-            <tr>
-                <td><!-- name --></td>
-                <td><!-- description --></td>
-                <td><!-- requirements --></td>
-                <td><!-- executedIn --></td>
-                <td><!-- needsPersons --></td>
-                <td>x<!-- preparationTime --></td>
-                <td>x<!-- buildUpTime --></td>
-                <td><!-- needsElectricity --></td>
-                <td><!-- needsDressingClothes --></td>
-                <td><!-- needsFacePaint --></td>
-                <td><!-- isPortable --></td>
-            </tr>
+<!--            <tr>-->
+<!--                <td>&lt;!&ndash; name &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; description &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; requirements &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; executedIn &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; needsPersons &ndash;&gt;</td>-->
+<!--                <td>x&lt;!&ndash; preparationTime &ndash;&gt;</td>-->
+<!--                <td>x&lt;!&ndash; buildUpTime &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; needsElectricity &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; needsDressingClothes &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; needsFacePaint &ndash;&gt;</td>-->
+<!--                <td>&lt;!&ndash; isPortable &ndash;&gt;</td>-->
+<!--            </tr>-->
 
             </tbody>
         </table>
@@ -2714,6 +2714,13 @@
                 <input id="date" class="spookinator__input--range" type="range" name="points" min="0" max="5" value="0" step="1"
                        onmousemove="showSliderValue(this.value)">
                 <output id="js-spookinator-range">0 jaar</output>
+            </div>
+        </section>
+
+        <section class="spookinator__filter-section">
+            <h4>Zoeken</h4>
+            <div class="checkbox-container" style="padding-top: 15px;">
+                <input id="search" class="spookinator__input--input" type="input" name="search" onkeyup="search()" autofocus>
             </div>
         </section>
     </article>

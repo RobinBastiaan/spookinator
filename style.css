@@ -129,7 +129,7 @@ img {
 
 .spookinator__filter-section {
     padding: 10px;
-    min-width: 250px;
+    min-width: 310px;
     background: var(--main-color);
     flex-grow: 1;
     text-align: center;
@@ -199,6 +199,11 @@ label.label-checkbox {
 .inspirator__input--range {
     width: 190px;
     margin-right: 15px;
+}
+
+.spookinator__input--input {
+    border-radius: 5px;
+    padding: 3px;
 }
 
 /* Toggle */
