@@ -218,6 +218,12 @@ label.label-checkbox {
     max-height: 0;
 }
 
+#spookinator__item-counter__stats span {
+    display: inline-block;
+    width: 110px;
+    text-align: left;
+}
+
 .spookinator__toggle:focus .spookinator__toggle--hidden-div,
 #spookinator__item-counter:focus #spookinator__item-counter__stats {
     display: block;
