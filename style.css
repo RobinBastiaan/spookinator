@@ -49,6 +49,10 @@ input {
     justify-content: center;
 }
 
+.vertical-align {
+    vertical-align: middle;
+}
+
 #spookinator__source-table { /* only show the source table when editing the page */
     display: none;
 }
@@ -148,6 +152,11 @@ img {
     font-size: x-small;
     margin: 10px;
     text-align: right;
+}
+
+#spookinator__footer a {
+    text-decoration: none !important;
+    color: var(--text-color);
 }
 /*</style>*/
 
