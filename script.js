@@ -5,6 +5,7 @@
 let items = [];
 let foundItems = [];
 let maxRange = 3;
+let showExecutedIn = false;
 
 class itemClass {
     constructor(id, name, description, requirements, executedIn, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
@@ -33,7 +34,9 @@ class itemClass {
 
         // display icons
         htmlString += `<span class="left">`;
-        htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
+        if (showExecutedIn) {
+            htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
+        }
         if (this.needsPersons) {
             htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-persons.svg">`;
         }
@@ -62,7 +65,7 @@ class itemClass {
         }
         htmlString += `</span>`;
 
-        // display additional information
+        // display additional information toggle
         htmlString += `<div class="spookinator__toggle--hidden-div">`;
         htmlString += `<br><p><br>${this.description}</p>`;
         htmlString += ' &bull; ' + this.requirements.join(' &bull; ');
@@ -283,6 +286,14 @@ function showSliderValue(newValue) {
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
+
+    // show date filter option based on configuration
+    if (showExecutedIn) {
+        document.getElementById('js-date').classList.remove('spookinator__item--hidden');
+        Array.from(document.getElementsByClassName('spookinator__filter-section')).forEach((el) => {
+            el.classList.remove('spookinator__filter-section--small');
+        });
+    }
 
     // add search event listeners
     let clickableSearchElements = document.querySelectorAll("input");

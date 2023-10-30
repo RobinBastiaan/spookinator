@@ -3034,7 +3034,7 @@
     <!-- Begin Main -->
     <!-- Part 1: The following code needs to be placed in a plugin area, to avoid issues with PBWorks removing properties and elements. -->
     <article id="spookinator__filters">
-        <section class="spookinator__filter-section">
+        <section class="spookinator__filter-section spookinator__filter-section--small">
             <h4>Voorbereidingstijd / Opbouwtijd</h4>
             <span class="flex">
                 <label class="label-checkbox">
@@ -3065,7 +3065,7 @@
             </span>
         </section>
 
-        <section class="spookinator__filter-section">
+        <section class="spookinator__filter-section spookinator__filter-section--small">
             <h4>Speciale benodigdheden</h4>
             <div class="flex">
                 <label class="label-checkbox">
@@ -3091,7 +3091,8 @@
             </div>
         </section>
 
-        <section class="spookinator__filter-section">
+        <!-- Only show this filter option if determined by configuration. -->
+        <section id="js-date" class="spookinator__filter-section spookinator__filter-section--small spookinator__item--hidden">
             <h4>Minimale herhalingsperiode</h4>
             <div class="checkbox-container" style="padding-top: 15px;">
                 <input id="date" class="spookinator__input--range" type="range" name="points" min="0" max="5" value="0" step="1"
@@ -3100,7 +3101,7 @@
             </div>
         </section>
 
-        <section class="spookinator__filter-section">
+        <section class="spookinator__filter-section spookinator__filter-section--small">
             <h4>Zoeken</h4>
             <div class="checkbox-container" style="padding-top: 15px;">
                 <input id="search" class="spookinator__input--input" type="input" name="search" onkeyup="search()" autofocus>

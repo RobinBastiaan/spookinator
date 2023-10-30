@@ -139,6 +139,10 @@ img {
     text-align: center;
 }
 
+.spookinator__filter-section--small {
+    min-width: 250px;
+}
+
 .spookinator__filter-section h4 {
     background: var(--highlight-color);
     margin: 0;
