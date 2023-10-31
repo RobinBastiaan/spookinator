@@ -1,3 +1,5 @@
+/*Since the platform does not allow large file-size within a plugins-widget, the script of the Spookinator has to be placed in multiple smaller plugins-widgets.*/
+
 /*<style>*//*0*/
 :root {
     scrollbar-gutter: stable;
@@ -193,7 +195,7 @@ img {
     text-decoration: none !important;
     color: var(--text-color);
 }
-/*</style>*/
+/*</style>*//*0*/
 
 /*<style>*//*1*/
 .hidden-checkbox {
@@ -406,4 +408,4 @@ label.label-checkbox {
         transform: translateY(-30px);
     }
 }
-/*</style>*/
+/*</style>*//*1*/

@@ -1,7 +1,7 @@
-//<!-- The Script for the Spookinator -->
-//<!-- Since the platform does not allow large file-size within a plugins-widget, the script of the Spookinator has to be placed in multiple smaller plugins-widgets. -->
+// The Script for the Spookinator
+// Since the platform does not allow large file-size within a plugins-widget, the script of the Spookinator has to be placed in multiple smaller plugins-widgets.
 
-//<script>/*0*/// Global initial values
+//<script>//0 Global initial values
 let items = [];
 let foundItems = [];
 let maxRange = 3;
@@ -101,9 +101,9 @@ function sanitizeRangeInput(input) {
     // ensure a minimum range of 1 and a maximum range of maxRange
     return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
 }
-//</script>
+//</script>//0
 
-//<script>/*1*/// display the items with their values
+//<script>//1 display the items with their values
 function show(id) {
     document.getElementById(id).classList.remove('spookinator__item--hidden');
 }
@@ -207,7 +207,9 @@ function search() {
     showItems();
     showCounter();
 }
+//</script>//1
 
+//<script>//2 display the programs with their values
 function showItems() {
     if (!foundItems) {
         return;
@@ -222,9 +224,7 @@ function showItems() {
         }
     }
 }
-//</script>
 
-//<script>/*2*/// display the programs with their values
 function showCounter() {
     let foundElement = document.querySelector('#js-item-counter');
     let foundItemsCount = foundItems.length;
@@ -281,8 +281,9 @@ function showSliderValue(newValue) {
     let yearText = newValue === '0' || newValue === '1' ? ' jaar' : ' jaren';
     document.querySelector('#js-spookinator-range').innerHTML = newValue + yearText;
 }
+//</script>//2
 
-// initial function calls and eventListeners
+//<script>//3 initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
@@ -323,6 +324,6 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-//</script>
+//</script>//3
 
 module.exports = {itemClass}
