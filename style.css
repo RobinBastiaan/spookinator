@@ -67,13 +67,14 @@ input {
     background: var(--highlight-color);
     text-align: center;
     width: 150px;
+    margin: 10px auto;
     padding: 10px;
     border-radius: 15px;
 }
 
 #spookinator__info-button {
     filter: var(--highlight-color-as-filter);
-    margin: 20px;
+    margin: 10px;
     width: 39px;
     height: 39px;
 }
