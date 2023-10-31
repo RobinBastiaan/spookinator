@@ -53,6 +53,10 @@ input {
     vertical-align: middle;
 }
 
+.inline-block {
+    display: inline-block;
+}
+
 #spookinator__source-table { /* only show the source table when editing the page */
     display: none;
 }
@@ -61,9 +65,36 @@ input {
     background: var(--highlight-color);
     text-align: center;
     width: 150px;
-    margin: 10px auto;
     padding: 10px;
     border-radius: 15px;
+}
+
+#spookinator__info-button {
+    filter: var(--highlight-color-as-filter);
+    margin: 20px;
+    width: 39px;
+    height: 39px;
+}
+
+#spookinator__info-button:hover {
+    filter: var(--hover-color-as-filter);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#spookinator__info-button--active {
+    filter: var(--on-color-as-filter);
+}
+
+#spookinator__info {
+    position: relative;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 960px;
+    overflow: hidden;
+    color: var(--text-color);
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 #spookinator__results {
@@ -120,7 +151,7 @@ img {
 
 #spookinator__filters {
     position: relative;
-    margin: 0 auto;
+    margin: 60px auto 0;
     padding: 0;
     max-width: 960px;
     overflow: hidden;
@@ -154,7 +185,7 @@ img {
     font-weight: lighter;
     font-style: italic;
     font-size: x-small;
-    margin: 10px;
+    margin: 30px 10px 10px;
     text-align: right;
 }
 

@@ -295,6 +295,11 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // add show info event listener
+    document.getElementById('spookinator__info-button').addEventListener("click", function() {
+        document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
+    });
+
     // add search event listeners
     let clickableSearchElements = document.querySelectorAll("input");
     for (let i = 0; i < clickableSearchElements.length; i++) {

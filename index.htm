@@ -11,22 +11,6 @@
 </head>
 <body>
 <div id="wikipage-inner">
-    <p>Klik op "Edit" van deze pagina om spookpad posten toe te voegen en te updaten.</p>
-    <p>Tips bij het samenstellen van een spookpad:</p>
-    <ul>
-        <li>Probeer zo veel mogelijk bij iedere post het thema van het kamp te gebruiken. Denk aan het terug laten komen van themafiguren, maar ook
-            aan het gebruik van de setting van het thema zelf.
-        </li>
-        <li>Zorg voor veel variatie in de soort posten, zoals: thema-gehalte, kruip/klim elementen, doe-elementen en gebruik van verschillende
-            zintuigen.
-        </li>
-        <li>Plaats posten die electra nodig hebben in de buurt van elkaar zodat ze stroom kunnen krijgen via de haspels.</li>
-        <li>Bouw posten die niet draagbaar zijn bij een weg die met de auto begaanbaar is,
-            zodat de materialen van deze posten gemakkelijk te droppen en op te picken valt.
-        </li>
-    </ul>
-    <p><br/></p>
-
     <!-- The source table -->
     <!-- This table contains all data and is used by Javascript for a dynamic filter system. -->
     <!-- Users can edit the source table themselves, making it convenient for non-developers to update the Spookinator. -->
@@ -3111,7 +3095,26 @@
     <!-- End Part 1 -->
 
     <!-- Part 2: The following code needs to be placed in a plugin area, to avoid issues with PBWorks removing properties and elements. -->
-    <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
+    <div class="flex">
+        <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
+        <img id="spookinator__info-button" class="vertical-align" src="src/info.svg" alt="Tips bij het samenstellen van een spookpad" title="Tips bij het samenstellen van een spookpad">
+    </div>
+
+    <article id="spookinator__info" class="spookinator__item--hidden">
+        <h4>Tips bij het samenstellen van een spookpad</h4>
+        <ul>
+            <li>Probeer zo veel mogelijk bij iedere post het thema van het kamp te gebruiken. Denk aan het terug laten komen van themafiguren, maar ook
+                aan het gebruik van de setting van het thema zelf.
+            </li>
+            <li>Zorg voor veel variatie in de soort posten, zoals: thema-gehalte, kruip/klim elementen, doe-elementen en gebruik van verschillende
+                zintuigen.
+            </li>
+            <li>Plaats posten die electra nodig hebben in de buurt van elkaar zodat ze stroom kunnen krijgen via de haspels.</li>
+            <li>Bouw posten die niet draagbaar zijn bij een weg die met de auto begaanbaar is,
+                zodat de materialen van deze posten gemakkelijk te droppen en op te picken valt.
+            </li>
+        </ul>
+    </article>
 
     <div id="spookinator__results">
         <!-- Will be filled with results by JS. -->
