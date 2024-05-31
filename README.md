@@ -36,7 +36,7 @@ had to be built around with.
 
 ## Preview
 
-![spookinator](https://user-images.githubusercontent.com/38226878/198897319-40be6c10-a0bd-4e80-9df2-cb83cf8d83ad.PNG)
+![spookinator](/src/preview.png)
 
 <p align="center" width="100%">
     <img width="10%" src="favicon.png?raw=true"> 
