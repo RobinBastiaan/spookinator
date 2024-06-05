@@ -1,0 +1,69 @@
+<script>
+    let items = [];
+    let maxRange = 3;
+
+    class itemClass {
+        constructor(name, description, requirements, executedIn, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
+            this.name = name;
+            this.description = description;
+            this.requirements = requirements;
+            this.executedIn = executedIn;
+            this.needsPersons = needsPersons;
+            this.preparationTime = preparationTime;
+            this.buildUpTime = buildUpTime;
+            this.needsElectricity = needsElectricity;
+            this.needsDressingClothes = needsDressingClothes;
+            this.needsFacePaint = needsFacePaint;
+            this.isPortable = isPortable;
+        }
+    }
+
+    // to make sure some input transformations are correct
+    function sanitizeInput(input) {
+        return input.trim().replace('&amp;', '&').replace('&nbsp;', '');
+    }
+
+    // additional sanitation rules for ranged input
+    function sanitizeRangeInput(input) {
+        let regexp = new RegExp("[^x]", "g"); // keep only the character "x"
+        let sanitizedInput = sanitizeInput(input).toLowerCase().replace(regexp, '');
+
+        // ensure a minimum range of 1 and a maximum range of maxRange
+        return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        fetch('../../index.htm')
+            .then(response => response.text())
+            .then(function (text) {
+                let tempContainer = document.createElement('div');
+                tempContainer.innerHTML = text;
+                let children = tempContainer.querySelector('#js-spookinator-source-table').children[0];
+                let len = children.childElementCount;
+
+                for (let i = 1; i < len; i++) {
+                    let valueToPush = [];
+                    for (let column = 0; column <= 10; column++) {
+                        if (column === 2 || column === 3) { // these columns can have multiple entries separated by commas
+                            valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
+                                return sanitizeInput(item);
+                            });
+                        } else if (column === 5 || column === 6) { // these columns contain a ranged input
+                            valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
+                        } else {
+                            valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
+                        }
+                    }
+
+                    // filter items without a name
+                    if (!valueToPush[0]) {
+                        continue;
+                    }
+
+                    items.push(new itemClass(...valueToPush));
+                }
+
+                document.body.appendChild(document.createTextNode(JSON.stringify(items[Math.floor(Math.random() * items.length)])));
+            });
+    });
+</script>
