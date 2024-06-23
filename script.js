@@ -38,7 +38,7 @@ class itemClass {
             htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
         }
         if (this.needsPersons) {
-            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-persons.svg">`;
+            htmlString += `<img alt="${this.needsPersons.length} Personen nodig" title="${this.needsPersons.length} Personen nodig" src="src/needs-persons.svg">`;
         }
         if (this.needsElectricity) {
             htmlString += `<img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">`;
@@ -250,7 +250,7 @@ function showCounter() {
         `<br><span><img alt="Opbouwtijd" title="Opbouwtijd" src="src/build-up-time.svg"> ` +
         `${lowBuildUpTimeCount} / ${mediumBuildUpTimeCount} / ${highBuildUpTimeCount}` +
         `</span>` +
-        `<br><span><img alt="Staf nodig" title="Staf nodig" src="src/needs-persons.svg"> ` +
+        `<br><span><img alt="Personen nodig" title="Personen nodig" src="src/needs-persons.svg"> ` +
         `<meter value="${needsPersonsCount}" max="${foundItemsCount}">${needsPersonsCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg"> ` +
