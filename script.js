@@ -115,7 +115,7 @@ function retrieveItemsFromDocument() {
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
         for (let column = 0; column <= 9; column++) {
-            if (column === 2 || column === 3) { // these columns can have multiple entries separated by commas
+            if (column === 2) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
