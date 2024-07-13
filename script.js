@@ -5,15 +5,13 @@
 let items = [];
 let foundItems = [];
 let maxRange = 3;
-let showExecutedIn = false;
 
 class itemClass {
-    constructor(id, name, description, requirements, executedIn, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
+    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
-        this.executedIn = executedIn;
         this.needsPersons = needsPersons;
         this.preparationTime = preparationTime;
         this.buildUpTime = buildUpTime;
@@ -34,9 +32,6 @@ class itemClass {
 
         // display icons
         htmlString += `<span class="left">`;
-        if (showExecutedIn) {
-            htmlString += `<img alt="Uitgevoerd in" title="Uitgevoerd in" src="src/executed-in.svg"> ${this.executedIn.join(', ')}<br>`;
-        }
         if (this.needsPersons) {
             htmlString += `<img alt="${this.needsPersons.length} Personen nodig" title="${this.needsPersons.length} Personen nodig" src="src/needs-persons.svg">`;
         }
@@ -119,12 +114,12 @@ function retrieveItemsFromDocument() {
 
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
-        for (let column = 0; column <= 10; column++) {
+        for (let column = 0; column <= 9; column++) {
             if (column === 2 || column === 3) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
-            } else if (column === 5 || column === 6) { // these columns contain a ranged input
+            } else if (column === 4 || column === 5) { // these columns contain a ranged input
                 valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
             } else {
                 valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
@@ -165,7 +160,6 @@ function search() {
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
     let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
 
-    let when = document.getElementById('date').value;
     // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
     let search = document.getElementById('search').value.toLowerCase();
 
@@ -192,11 +186,8 @@ function search() {
         if (isPortable === 'on' && !item.isPortable || isPortable === 'off' && item.isPortable) {
             continue;
         }
-        if (+item.executedIn[0] + +when >= (new Date()).getFullYear() + 1 && item.executedIn[0] !== '*') { // check if the program has right date
-            continue;
-        }
         if (search && ! item.name.toLowerCase().includes(search) && ! item.description.toLowerCase().includes(search)
-                && ! item.requirements.join().toLowerCase().includes(search) && ! item.executedIn.join(',').includes(search)) {
+                && ! item.requirements.join().toLowerCase().includes(search)) {
             continue;
         }
 
@@ -275,26 +266,12 @@ function showCounter() {
     void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
-
-// show the correct value of the slider-range
-function showSliderValue(newValue) {
-    let yearText = newValue === '0' || newValue === '1' ? ' jaar' : ' jaren';
-    document.querySelector('#js-spookinator-range').innerHTML = newValue + yearText;
-}
 //</script>//2
 
 //<script>//3 initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
-
-    // show date filter option based on configuration
-    if (showExecutedIn) {
-        document.getElementById('js-date').classList.remove('spookinator__item--hidden');
-        Array.from(document.getElementsByClassName('spookinator__filter-section')).forEach((el) => {
-            el.classList.remove('spookinator__filter-section--small');
-        });
-    }
 
     // add show info event listener
     document.getElementById('spookinator__info-button').addEventListener("click", function() {
