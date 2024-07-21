@@ -7,7 +7,7 @@ let foundItems = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible) {
+    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -20,6 +20,9 @@ class itemClass {
         this.needsFacePaint = needsFacePaint;
         this.isPortable = isPortable;
         this.wheelchairAccessible = wheelchairAccessible;
+        this.containsGore = containsGore;
+        this.pioneering = pioneering;
+        this.needsHole = needsHole;
         this.html = this.buildHtml();
     }
 
@@ -50,6 +53,15 @@ class itemClass {
         }
         if (this.wheelchairAccessible) {
             htmlString += `<img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg">`;
+        }
+        if (this.containsGore) {
+            htmlString += `<img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg">`;
+        }
+        if (this.pioneering) {
+            htmlString += `<img alt="Pionieren" title="Pionieren" src="src/pioneering.svg">`;
+        }
+        if (this.needsHole) {
+            htmlString += `<img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg">`;
         }
         htmlString += `</span>`;
 
@@ -100,6 +112,7 @@ function sanitizeRangeInput(input) {
     // ensure a minimum range of 1 and a maximum range of maxRange
     return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
 }
+
 //</script>//0
 
 //<script>//1 display the items with their values
@@ -118,7 +131,7 @@ function retrieveItemsFromDocument() {
 
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
-        for (let column = 0; column <= 10; column++) {
+        for (let column = 0; column <= 13; column++) {
             if (column === 2) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
@@ -126,7 +139,7 @@ function retrieveItemsFromDocument() {
             } else if (column === 4 || column === 5) { // these columns contain a ranged input
                 valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
             } else if (children.children[i].children[column]) {
-                    valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
+                valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
             } else {
                 console.warn('Did not find column ' + column + ' for item ' + i + ' (' + valueToPush[0] + ').');
             }
@@ -166,6 +179,9 @@ function search() {
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
     let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
     let wheelchairAccessible = document.querySelector('input[value="wheelchair-accessible"]').getAttribute('state');
+    let containsGore = document.querySelector('input[value="contains-gore"]').getAttribute('state');
+    let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
+    let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
 
     // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
     let search = document.getElementById('search').value.toLowerCase();
@@ -196,8 +212,17 @@ function search() {
         if (wheelchairAccessible === 'on' && !item.wheelchairAccessible || wheelchairAccessible === 'off' && item.wheelchairAccessible) {
             continue;
         }
-        if (search && ! item.name.toLowerCase().includes(search) && ! item.description.toLowerCase().includes(search)
-                && ! item.requirements.join().toLowerCase().includes(search)) {
+        if (containsGore === 'on' && !item.containsGore || containsGore === 'off' && item.containsGore) {
+            continue;
+        }
+        if (pioneering === 'on' && !item.pioneering || pioneering === 'off' && item.pioneering) {
+            continue;
+        }
+        if (needsHole === 'on' && !item.needsHole || needsHole === 'off' && item.needsHole) {
+            continue;
+        }
+        if (search && !item.name.toLowerCase().includes(search) && !item.description.toLowerCase().includes(search)
+            && !item.requirements.join().toLowerCase().includes(search)) {
             continue;
         }
 
@@ -208,6 +233,7 @@ function search() {
     showItems();
     showCounter();
 }
+
 //</script>//1
 
 //<script>//2 display the programs with their values
@@ -242,6 +268,9 @@ function showCounter() {
     let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
     let isPortableCount = foundItems.filter(x => x.isPortable).length;
     let wheelchairAccessibleCount = foundItems.filter(x => x.wheelchairAccessible).length;
+    let containsGoreCount = foundItems.filter(x => x.containsGore).length;
+    let pioneeringCount = foundItems.filter(x => x.pioneering).length;
+    let needsHoleCount = foundItems.filter(x => x.needsHole).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
         ` <img class="right" alt="Zie meer" src="src/down.svg">` +
@@ -270,6 +299,15 @@ function showCounter() {
         `<br><span><img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg"> ` +
         `<meter value="${wheelchairAccessibleCount}" max="${foundItemsCount}">${wheelchairAccessibleCount} / ${foundItemsCount}</meter>` +
         `</span>` +
+        `<br><span><img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg"> ` +
+        `<meter value="${containsGoreCount}" max="${foundItemsCount}">${containsGoreCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Pionieren" title="Pionieren" src="src/pioneering.svg"> ` +
+        `<meter value="${pioneeringCount}" max="${foundItemsCount}">${pioneeringCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg"> ` +
+        `<meter value="${needsHoleCount}" max="${foundItemsCount}">${needsHoleCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
         `</span>`;
 
     // only show the ghost when there are no results
@@ -280,6 +318,7 @@ function showCounter() {
     void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
+
 //</script>//2
 
 //<script>//3 initial function calls and eventListeners
@@ -288,7 +327,7 @@ window.addEventListener('DOMContentLoaded', () => {
     search();
 
     // add show info event listener
-    document.getElementById('spookinator__info-button').addEventListener("click", function() {
+    document.getElementById('spookinator__info-button').addEventListener("click", function () {
         document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
     });
 
