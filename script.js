@@ -7,7 +7,7 @@ let foundItems = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable) {
+    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -19,6 +19,7 @@ class itemClass {
         this.needsDressingClothes = needsDressingClothes;
         this.needsFacePaint = needsFacePaint;
         this.isPortable = isPortable;
+        this.wheelchairAccessible = wheelchairAccessible;
         this.html = this.buildHtml();
     }
 
@@ -46,6 +47,9 @@ class itemClass {
         }
         if (this.isPortable) {
             htmlString += `<img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg">`;
+        }
+        if (this.wheelchairAccessible) {
+            htmlString += `<img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg">`;
         }
         htmlString += `</span>`;
 
@@ -114,15 +118,17 @@ function retrieveItemsFromDocument() {
 
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
-        for (let column = 0; column <= 9; column++) {
+        for (let column = 0; column <= 10; column++) {
             if (column === 2) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
             } else if (column === 4 || column === 5) { // these columns contain a ranged input
                 valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
+            } else if (children.children[i].children[column]) {
+                    valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
             } else {
-                valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
+                console.warn('Did not find column ' + column + ' for item ' + i + ' (' + valueToPush[0] + ').');
             }
         }
 
@@ -159,6 +165,7 @@ function search() {
     let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').getAttribute('state');
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
     let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
+    let wheelchairAccessible = document.querySelector('input[value="wheelchair-accessible"]').getAttribute('state');
 
     // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
     let search = document.getElementById('search').value.toLowerCase();
@@ -184,6 +191,9 @@ function search() {
             continue;
         }
         if (isPortable === 'on' && !item.isPortable || isPortable === 'off' && item.isPortable) {
+            continue;
+        }
+        if (wheelchairAccessible === 'on' && !item.wheelchairAccessible || wheelchairAccessible === 'off' && item.wheelchairAccessible) {
             continue;
         }
         if (search && ! item.name.toLowerCase().includes(search) && ! item.description.toLowerCase().includes(search)
@@ -231,6 +241,7 @@ function showCounter() {
     let needsDressingClothesCount = foundItems.filter(x => x.needsDressingClothes).length;
     let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
     let isPortableCount = foundItems.filter(x => x.isPortable).length;
+    let wheelchairAccessibleCount = foundItems.filter(x => x.wheelchairAccessible).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
         ` <img class="right" alt="Zie meer" src="src/down.svg">` +
@@ -255,6 +266,9 @@ function showCounter() {
         `</span>` +
         `<br><span><img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg"> ` +
         `<meter value="${isPortableCount}" max="${foundItemsCount}">${isPortableCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg"> ` +
+        `<meter value="${wheelchairAccessibleCount}" max="${foundItemsCount}">${wheelchairAccessibleCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `</span>`;
 
