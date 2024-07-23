@@ -195,6 +195,7 @@ img {
 #spookinator__footer a {
     text-decoration: none !important;
     color: var(--text-color);
+    margin-left: 20px;
 }
 /*</style>*//*0*/
 

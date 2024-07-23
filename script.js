@@ -233,7 +233,6 @@ function search() {
     showItems();
     showCounter();
 }
-
 //</script>//1
 
 //<script>//2 display the programs with their values
@@ -318,7 +317,6 @@ function showCounter() {
     void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
-
 //</script>//2
 
 //<script>//3 initial function calls and eventListeners
