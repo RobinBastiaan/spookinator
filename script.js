@@ -232,6 +232,7 @@ function search() {
     // show the result
     showItems();
     showCounter();
+    generateTrail(document.getElementsByName('posts')[0].value);
 }
 //</script>//1
 
@@ -317,16 +318,34 @@ function showCounter() {
     void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
+
+function generateTrail(trailLength) {
+    let trail = foundItems.sort(() => 0.5 - Math.random()).slice(0, trailLength);
+    let warningText = '';
+
+    if (foundItems.length < trailLength) {
+        warningText += '<div style="text-align: center">Er zijn te weinig resultaten om de spookpad volledig te vullen.</div>';
+    }
+
+    document.querySelector('#spookinator__trail--results').innerHTML = trail.map(item => item.html).join(' ') + warningText;
+}
 //</script>//2
 
 //<script>//3 initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
+    generateTrail(10);
 
     // add show info event listener
     document.getElementById('spookinator__info-button').addEventListener("click", function () {
         document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
+    });
+
+    // add show trail event listener
+    document.getElementById('spookinator__trail-button').addEventListener("click", function () {
+        document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
+        document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
     });
 
     // add search event listeners
@@ -351,6 +370,7 @@ window.addEventListener('DOMContentLoaded', () => {
             search();
         });
     }
+
 });
 //</script>//3
 

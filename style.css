@@ -72,24 +72,24 @@ input {
     border-radius: 15px;
 }
 
-#spookinator__info-button {
+.spookinator__toggle-button {
     filter: var(--highlight-color-as-filter);
     margin: 10px;
     width: 39px;
     height: 39px;
 }
 
-#spookinator__info-button:hover {
+.spookinator__toggle-button:hover {
     filter: var(--hover-color-as-filter);
     transition: 0.3s;
     cursor: pointer;
 }
 
-#spookinator__info-button--active {
+.spookinator__toggle-button--active {
     filter: var(--on-color-as-filter);
 }
 
-#spookinator__info {
+.spookinator__box {
     position: relative;
     margin: 0 auto;
     padding: 0;
@@ -149,7 +149,7 @@ img {
 }
 
 .spookinator__item--hidden {
-    display: none;
+    display: none !important;
 }
 
 #spookinator__filters {
@@ -280,11 +280,21 @@ label.label-checkbox {
     animation: toggle-animation 0.5s both ease-in-out;
 }
 
+#spookinator__trail .spookinator__toggle--hidden-div {
+    display: block;
+    max-height: 200px;
+    line-height: 1em;
+}
+
+#spookinator__trail .spookinator__item {
+    width: 98%;
+}
+
 @keyframes toggle-animation {
     from {
         display: none;
         max-height: 0;
-        color: var(--highlight-color);
+        color: var(--main-color);
     }
     to {
         display: block;

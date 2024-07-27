@@ -4659,7 +4659,7 @@
                     afgespeeld en waarschuwt hen voor de geesten die nog steeds rondwaren. Dan mogen de inchecken en hun naam schrijven in het
                     nachtregister. De receptionist leidt hem naar de lift die naar hun kamer zou leiden op de 13de verdieping. Wanneer de leden plaats
                     hebben genomen in de witte lift, horen ze verontrustende geluiden en zien ze schimmen. Aangekomen op de juiste verdieping horen ze
-                    een luid gebrul en vluchten moeten de leden door de andere kant van de lift het vervolg van het spookpad op te vluchten.
+                    een luid gebrul en vluchten de leden door de andere kant van de lift het vervolg van het spookpad op.
                 </td>
                 <td>Grondboor, 4x 3m palen, 4 witte lakens, Tafelblad, Schagen, lang kleed/tapijt, Tafelbel, clipbord, lijntjespapier, pen, oude
                     sleutels (decor), Kostuum voor receptionist, bureaulamp, liftmuziek met verontrustende geluiden, verlichting (voor schimmen buiten
@@ -4834,12 +4834,14 @@
     <!-- End Part 2 -->
 
     <!-- Part 3: The following code needs to be placed in a plugin area, to avoid issues with PBWorks removing properties and elements. -->
-    <img id="spookinator__info-button" class="vertical-align right" src="src/info.svg" alt="Tips bij het samenstellen van een spookpad"
+    <img id="spookinator__info-button" class="spookinator__toggle-button vertical-align right" src="src/info.svg" alt="Tips bij het samenstellen van een spookpad"
+         title="Tips bij het samenstellen van een spookpad">
+    <img id="spookinator__trail-button" class="spookinator__toggle-button vertical-align right" src="src/trail.svg" alt="Tips bij het samenstellen van een spookpad"
          title="Tips bij het samenstellen van een spookpad">
     <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
     <div style="clear: both;"></div>
 
-    <article id="spookinator__info" class="spookinator__item--hidden">
+    <article id="spookinator__info" class="spookinator__box spookinator__item--hidden">
         <h4>Tips bij het samenstellen van een spookpad</h4>
         <ul>
             <li>Probeer zo veel mogelijk bij iedere post het thema van het kamp te gebruiken. Denk aan het terug laten komen van themafiguren, maar
@@ -4856,6 +4858,17 @@
                 opruimen, maar ook is daardoor het geluid minder goed te horen. Denk verder ook aan de regendichtheid van de apparatuur.
             </li>
         </ul>
+    </article>
+
+    <article id="spookinator__trail" class="spookinator__box spookinator__item--hidden">
+        <div class="checkbox-container" style="padding-top: 15px; text-align: center">
+            Aantal posten
+            <input class="spookinator__input--input" type="number" name="posts" value="10" min="1" onkeyup="generateTrail(this.value)" onchange="generateTrail(this.value)" autofocus>
+        </div>
+
+        <div id="spookinator__trail--results">
+            <!-- Will be filled with results by JS. -->
+        </div>
     </article>
 
     <div id="spookinator__results">
