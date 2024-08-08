@@ -25,14 +25,15 @@ class itemClass {
         this.needsHole = needsHole;
         this.thema = thema;
         this.html = this.buildHtml();
+        this.trailHtml = this.buildHtml(true);
     }
 
-    buildHtml() {
+    buildHtml(isTrail = false) {
         let displayName = this.name.split(/(?=[A-Z])/).join('<wbr>');
         let htmlString;
 
         // display main information
-        htmlString = `<div id="${this.id}" class="spookinator__item spookinator__toggle" tabindex="1">`;
+        htmlString = `<div id="${isTrail ? 'trail-' : ''}${this.id}" class="spookinator__item spookinator__toggle" tabindex="1">`;
         htmlString += `<h4>${displayName.charAt(0).toUpperCase() + displayName.slice(1)}</h4>`;
 
         // display icons
@@ -333,7 +334,7 @@ function generateTrail(trailLength) {
         warningText += '<div style="text-align: center">Er zijn te weinig resultaten om de spookpad volledig te vullen.</div>';
     }
 
-    document.querySelector('#spookinator__trail--results').innerHTML = trail.map(item => item.html).join(' ') + warningText;
+    document.querySelector('#spookinator__trail--results').innerHTML = trail.map(item => item.trailHtml).join(' ') + warningText;
 }
 //</script>//2
 
