@@ -7,7 +7,7 @@ let foundItems = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole) {
+    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, thema) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -23,6 +23,7 @@ class itemClass {
         this.containsGore = containsGore;
         this.pioneering = pioneering;
         this.needsHole = needsHole;
+        this.thema = thema;
         this.html = this.buildHtml();
     }
 
@@ -131,8 +132,8 @@ function retrieveItemsFromDocument() {
 
     for (let i = 1; i < len; i++) {
         let valueToPush = [];
-        for (let column = 0; column <= 13; column++) {
-            if (column === 2) { // these columns can have multiple entries separated by commas
+        for (let column = 0; column <= 14; column++) {
+            if (column === 2 || column === 14) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     return sanitizeInput(item);
                 });
@@ -183,6 +184,8 @@ function search() {
     let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
     let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
 
+    let thema = document.querySelector('select[name="thema"]').value;
+
     // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
     let search = document.getElementById('search').value.toLowerCase();
 
@@ -219,6 +222,9 @@ function search() {
             continue;
         }
         if (needsHole === 'on' && !item.needsHole || needsHole === 'off' && item.needsHole) {
+            continue;
+        }
+        if (thema !== 'Alles' && thema !== 'Zonder thema' && !item.thema.join().includes(thema) || thema === 'Zonder thema' && item.thema.join() !== '') {
             continue;
         }
         if (search && !item.name.toLowerCase().includes(search) && !item.description.toLowerCase().includes(search)
