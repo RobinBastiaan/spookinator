@@ -103,7 +103,12 @@ class itemClass {
 
 // to make sure some input transformations are correct
 function sanitizeInput(input) {
-    return input.trim().replace('&amp;', '&').replace('&nbsp;', '');
+    return input
+        .trim() // Remove leading and trailing spaces
+        .replace(/&amp;/g, '&') // Replace '&amp;' with '&'
+        .replace(/&nbsp;/g, ' ') // Replace '&nbsp;' with a space
+        .replace(/\s+/g, ' ') // Replace multiple spaces and newlines with a single space
+        .replace(/\n/g, ''); // Remove newline characters
 }
 
 // additional sanitation rules for ranged input
@@ -136,7 +141,8 @@ function retrieveItemsFromDocument() {
         for (let column = 0; column <= 14; column++) {
             if (column === 2 || column === 14) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
-                    return sanitizeInput(item);
+                    let str = sanitizeInput(item);
+                    return str.charAt(0).toUpperCase() + str.slice(1); // Capitalize the first letter.
                 });
             } else if (column === 4 || column === 5) { // these columns contain a ranged input
                 valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
@@ -157,10 +163,16 @@ function retrieveItemsFromDocument() {
 
     // sort alphabetically
     items.sort((a, b) => a.name.localeCompare(b.name));
-
     resultHTML += items.map(item => item.html).join(' ');
 
     document.querySelector('#spookinator__results').innerHTML += resultHTML;
+}
+
+// Use this script to generate the JSON data for the API.
+function generateJSON() {
+    console.log(JSON.stringify(items, (key, value) => {
+        return key === 'id' || key === 'html' || key === 'trailHtml' ? undefined : value;
+    }));
 }
 
 // search for the programs
