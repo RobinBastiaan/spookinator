@@ -348,10 +348,28 @@ function generateTrail() {
     let warningText = '';
 
     if (trail.length < trailLength || trailWithPersons.length < persons || trailWithoutPersons.length < trailLength - persons) {
-        warningText += '<div style="text-align: center">Er zijn te weinig resultaten om de spookpad volledig te vullen.</div>';
+        warningText += '<div style="text-align: center; color: #9f212b">';
+        warningText += 'Er zijn te weinig resultaten om het spookpad volledig te vullen.';
+        if (trailWithPersons.length < persons) {
+            let missingWithPersons = persons - trailWithPersons.length;
+            if (missingWithPersons === 1) {
+                warningText += ' Er mist ' + missingWithPersons + ' post met personen.';
+            } else {
+                warningText += ' Er missen ' + missingWithPersons + ' posten met personen.';
+            }
+        }
+        if (trailWithoutPersons.length < trailLength - persons) {
+            let missingWithoutPersons = trailLength - persons - trailWithoutPersons.length;
+            if (missingWithoutPersons === 1) {
+                warningText += ' Er mist ' + missingWithoutPersons + ' post zonder personen.';
+            } else {
+                warningText += ' Er missen ' + missingWithoutPersons + ' posten zonder personen.';
+            }
+        }
+        warningText += '</div>';
     }
 
-    document.querySelector('#spookinator__trail--results').innerHTML = trail.map(item => item.trailHtml).join(' ') + warningText;
+    document.querySelector('#spookinator__trail--results').innerHTML = warningText + trail.map(item => item.trailHtml).join(' ');
 }
 
 function alternateCombine(array1, array2) {
