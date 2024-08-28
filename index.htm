@@ -5423,8 +5423,14 @@
 
     <article id="spookinator__trail" class="spookinator__box spookinator__item--hidden">
         <div class="checkbox-container" style="padding-top: 15px; text-align: center">
-            Aantal posten
-            <input class="spookinator__input--input" type="number" name="posts" value="10" min="1" onkeyup="generateTrail(this.value)" onchange="generateTrail(this.value)" autofocus>
+            <label>
+                Posten
+                <input class="spookinator__input--input" type="number" name="posts" value="15" min="1" onkeyup="generateTrail()" onchange="generateTrail()" autofocus>
+            </label>
+            <label style="margin-left: 25px">
+                Mensen
+                <input class="spookinator__input--input" type="number" name="persons" value="10" min="1" onkeyup="generateTrail()" onchange="generateTrail()">
+            </label>
         </div>
 
         <div id="spookinator__trail--results">

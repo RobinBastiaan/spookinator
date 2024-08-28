@@ -251,7 +251,7 @@ function search() {
     // show the result
     showItems();
     showCounter();
-    generateTrail(document.getElementsByName('posts')[0].value);
+    generateTrail();
 }
 //</script>//1
 
@@ -338,15 +338,32 @@ function showCounter() {
     foundElement.classList.add('update-counter');
 }
 
-function generateTrail(trailLength) {
-    let trail = foundItems.sort(() => 0.5 - Math.random()).slice(0, trailLength);
+function generateTrail() {
+    let trailLength = document.getElementsByName('posts')[0].value;
+    let persons = document.getElementsByName('persons')[0].value;
+    persons = persons > trailLength ? trailLength : persons; // Make sure persons is not bigger then trailLength
+    let trailWithPersons = foundItems.filter(item => item.needsPersons).sort(() => 0.5 - Math.random()).slice(0, persons);
+    let trailWithoutPersons = foundItems.filter(item => !item.needsPersons).sort(() => 0.5 - Math.random()).slice(0, trailLength - persons);
+    let trail = alternateCombine(trailWithPersons, trailWithoutPersons);
     let warningText = '';
 
-    if (foundItems.length < trailLength) {
+    if (trail.length < trailLength || trailWithPersons.length < persons || trailWithoutPersons.length < trailLength - persons) {
         warningText += '<div style="text-align: center">Er zijn te weinig resultaten om de spookpad volledig te vullen.</div>';
     }
 
     document.querySelector('#spookinator__trail--results').innerHTML = trail.map(item => item.trailHtml).join(' ') + warningText;
+}
+
+function alternateCombine(array1, array2) {
+    let result = [];
+    let i, l = Math.min(array1.length, array2.length);
+
+    for (i = 0; i < l; i++) {
+        result.push(array1[i], array2[i]);
+    }
+    result.push(...array1.slice(l), ...array2.slice(l));
+
+    return result;
 }
 //</script>//2
 
@@ -354,7 +371,7 @@ function generateTrail(trailLength) {
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
-    generateTrail(10);
+    generateTrail();
 
     // add show info event listener
     document.getElementById('spookinator__info-button').addEventListener("click", function () {
