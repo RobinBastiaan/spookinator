@@ -7,7 +7,7 @@ let foundItems = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, thema) {
+    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -23,7 +23,7 @@ class itemClass {
         this.containsGore = containsGore;
         this.pioneering = pioneering;
         this.needsHole = needsHole;
-        this.thema = thema;
+        this.theme = theme;
         this.html = this.buildHtml();
         this.trailHtml = this.buildHtml(true);
     }
@@ -199,7 +199,7 @@ function search() {
     let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
     let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
 
-    let thema = document.querySelector('select[name="thema"]').value;
+    let theme = document.querySelector('select[name="theme"]').value;
 
     // In order to perform a case-insensitive search, the case is lowered on both the search input as the item.
     let search = document.getElementById('search').value.toLowerCase();
@@ -239,7 +239,7 @@ function search() {
         if (needsHole === 'on' && !item.needsHole || needsHole === 'off' && item.needsHole) {
             continue;
         }
-        if (thema !== 'Alles' && thema !== 'Zonder thema' && !item.thema.join().includes(thema) || thema === 'Zonder thema' && item.thema.join() !== '') {
+        if (theme !== 'Alles' && theme !== 'Zonder thema' && !item.theme.join().includes(theme) || theme === 'Zonder thema' && item.theme.join() !== '') {
             continue;
         }
         if (search && !item.name.toLowerCase().includes(search) && !item.description.toLowerCase().includes(search)
