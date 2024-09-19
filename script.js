@@ -38,8 +38,10 @@ class itemClass {
 
         // display icons
         htmlString += `<span class="left">`;
-        if (this.needsPersons) {
-            htmlString += `<img alt="${this.needsPersons.length} Personen nodig" title="${this.needsPersons.length} Personen nodig" src="src/needs-persons.svg">`;
+        if (this.needsPersons.length === 1) {
+            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-person.svg">`;
+        } else if (this.needsPersons.length > 1) {
+            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-persons.svg">`;
         }
         if (this.needsElectricity) {
             htmlString += `<img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">`;
