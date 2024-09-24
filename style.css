@@ -74,7 +74,7 @@ input {
 
 .spookinator__toggle-button {
     filter: var(--highlight-color-as-filter);
-    margin: 10px;
+    padding: 10px 4px;
     width: 39px;
     height: 39px;
 }
@@ -86,7 +86,20 @@ input {
 }
 
 .spookinator__toggle-button--active {
-    filter: var(--on-color-as-filter);
+    filter: var(--text-color-as-filter);
+}
+
+.spookinator__icon-button {
+    filter: var(--highlight-color-as-filter);
+    padding-right: 8px;
+    width: 27px;
+    height: 27px;
+}
+
+.spookinator__icon-button:hover {
+    filter: var(--hover-color-as-filter);
+    transition: 0.3s;
+    cursor: pointer;
 }
 
 .spookinator__box {
@@ -242,6 +255,17 @@ label.label-checkbox {
 
 .label-checkbox > input[type='checkbox'][state='off']:hover + img {
     filter: var(--off-hover-color-as-filter);
+}
+
+.checkbox-container input[type='number'] {
+    max-width: 100px;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 500px) {
+    .checkbox-container input[type='number'] {
+        max-width: 75px;
+    }
 }
 
 .inspirator__input--range {

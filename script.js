@@ -395,13 +395,20 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // add show info event listener
     document.getElementById('spookinator__info-button').addEventListener("click", function () {
+        this.classList.toggle('spookinator__toggle-button--active');
         document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
     });
 
     // add show trail event listener
     document.getElementById('spookinator__trail-button').addEventListener("click", function () {
+        this.classList.toggle('spookinator__toggle-button--active');
         document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
         document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
+    });
+
+    // add regenerate trail event listener
+    document.getElementById('spookinator__regenerate-button').addEventListener("click", function () {
+        generateTrail();
     });
 
     // add search event listeners

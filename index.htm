@@ -2713,7 +2713,7 @@
                     valt de leden aan. Als de leden dit wel doen, zegt ie dat ie niets voor niets vast zat en komt alsnog achter de leden aan met luid
                     gebrul.
                 </td>
-                <td>Schandpaal, 1m paaltje, 2x touw, grondboor, rode zachte tennisballen. rode schmink, middeleeuwse kleding, zwarte schmink (voor
+                <td>Schandpaal, 1m paaltje, 2x touw, grondboor, rode zachte tennisballen, rode schmink, middeleeuwse kleding, zwarte schmink (voor
                     vegen op gezicht)
                 </td>
                 <td>x</td>
@@ -6293,8 +6293,8 @@
     <!-- Part 3: The following code needs to be placed in a plugin area, to avoid issues with PBWorks removing properties and elements. -->
     <img id="spookinator__info-button" class="spookinator__toggle-button vertical-align right" src="src/info.svg" alt="Tips bij het samenstellen van een spookpad"
          title="Tips bij het samenstellen van een spookpad">
-    <img id="spookinator__trail-button" class="spookinator__toggle-button vertical-align right" src="src/trail.svg" alt="Tips bij het samenstellen van een spookpad"
-         title="Tips bij het samenstellen van een spookpad">
+    <img id="spookinator__trail-button" class="spookinator__toggle-button vertical-align right" src="src/trail.svg" alt="Maak een spookpad"
+         title="Maak een spookpad">
     <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
     <div style="clear: both;"></div>
 
@@ -6330,15 +6330,17 @@
     </article>
 
     <article id="spookinator__trail" class="spookinator__box spookinator__item--hidden">
-        <div class="checkbox-container" style="padding-top: 15px; text-align: center">
+        <div class="checkbox-container" style="padding-top: 25px; padding-bottom: 5px; text-align: center">
             <label>
                 Posten
                 <input class="spookinator__input--input" type="number" name="posts" value="15" min="1" onkeyup="generateTrail()" onchange="generateTrail()" autofocus>
             </label>
-            <label style="margin-left: 25px">
+            <label>
                 Mensen
                 <input class="spookinator__input--input" type="number" name="persons" value="10" min="1" onkeyup="generateTrail()" onchange="generateTrail()">
             </label>
+            <img id="spookinator__regenerate-button" class="spookinator__icon-button vertical-align right" alt="Genereer een nieuw spookpad"
+                 title="Genereer een nieuw spookpad" src="src/regenerate.svg">
         </div>
 
         <div id="spookinator__trail--results">
