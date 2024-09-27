@@ -72,6 +72,22 @@ input {
     border-radius: 15px;
 }
 
+#spookinator__download-pdf {
+    display: block;
+    background: var(--highlight-color);
+    width: 200px;
+    margin: 10px auto;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+}
+
+#spookinator__download-pdf:hover {
+    background: var(--main-color);
+    transition: 0.3s;
+    cursor: pointer;
+}
+
 .spookinator__toggle-button {
     filter: var(--highlight-color-as-filter);
     padding: 10px 4px;

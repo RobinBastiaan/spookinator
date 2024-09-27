@@ -6,6 +6,7 @@
     <title>Spookpad</title>
     <link rel="icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="script.js" defer></script>
 
     <meta property="og:title" content="Spookpad.nl - Creëer een onvergetelijke tocht"/>
@@ -459,7 +460,7 @@
                 <td>Langs het pad weerklinken luide, grommende snurkgeluiden. Als de leden verder gaan, ontdekken ze een imposant gouden ei in een
                     nest en een waarschuwend bordje met een dreigend draakicoon leest: "Pas op, ik waak hier".
                 </td>
-                <td>Gouden ei met nest (vastgelijmd), boxen voor snurkgeluiden, draakgeluiden, bordje met draakicoon "Pas op, ik waak hier"</td>
+                <td>Gouden ei met nest (vastgelijmd), boxen voor snurkgeluiden, draakgeluiden, bordje met draakicoon "Pas op; ik waak hier"</td>
                 <td></td>
                 <td>xxx</td>
                 <td>x</td>
@@ -2929,7 +2930,7 @@
                 <td>Op een open vlakte is al vanuit de verte een levensgroot brandend kruis te zien. Wanneer de route hen dichterbij brengt, wordt het
                     mysterie van het hoe en waarom des te groter.
                 </td>
-                <td>Kruis (gemaakt van hout, kaarsvet, jutte en ijzerdraad), aanstekers, brandgel</td>
+                <td>Kruis (gemaakt van hout + jutte + ijzerdraad + kaarsvet), aanstekers, brandgel</td>
                 <td>x</td>
                 <td>x</td>
                 <td>x</td>
@@ -3307,7 +3308,7 @@
                     zijn. Als ze weer gewend zijn aan het donker, horen zij een harde gil, en op dat moment komt er een grote stekelbal besmeurd met
                     bloed op hen af. Bukken dus!
                 </td>
-                <td>Lamp, touw om de bal aan te hangen, schuimbal met schuimen punten met wat bloedsporen, zeilen om fuik te maken</td>
+                <td>Schuimbal met schuimen punten met wat bloedsporen, touw (om de bal aan te hangen), zeilen (om fuik te maken), lamp</td>
                 <td>1</td>
                 <td>xxx</td>
                 <td>xx</td>
@@ -3566,8 +3567,7 @@
                     enkele zagen. Opeens komt er een zaag tot leven en komt op de leden af met een zagend geluid. De leden kunnen de zaag nog net
                     ontwijken.
                 </td>
-                <td>3x grote cirkelzagen van hout, Veel palen die verspreid liggen over de zagerij, Een klein bouwwerkje erbij wat de zagerij moet
-                    voor stellen, Bandje met zaag geluid + (extra) speler + batterijen
+                <td>3x grote cirkelzagen van hout, Veel palen (die verspreid liggen over de zagerij), Klein bouwwerkje (zagerij), Boxen, Zaag geluid
                 </td>
                 <td>x</td>
                 <td>xx</td>
@@ -4383,7 +4383,7 @@
                     perkament om hun naam op te schrijven. Als het ondertekenen gelukt is, wordt de onverwacht ijskoude hand geschud. Als ze
                     weigeren, begint de Duivel onheilspellend te gelachen en spreekt een vloek uit over de rest van de tocht.
                 </td>
-                <td>Kaptafel, tafelkleed, perkament met contract, nep mes, rode inkt als nepbloed, led-kaarsen, duistere decoraties, duivelkostuum,
+                <td>Kaptafel, tafelkleed, contract op perkament, nep mes, rode inkt als nepbloed, led-kaarsen, duistere decoraties, duivelkostuum,
                     rode schmink, emmer water (hand koud maken)
                 </td>
                 <td>x</td>
@@ -5257,7 +5257,7 @@
                     aangerend. De houthakker is er van overtuigd dat de leden bomen zijn die ook omgehakt moeten worden en loopt al zwaaiend met een
                     bijl achter de leden aan.
                 </td>
-                <td>Bijl (in hout blok die in het bos gevonden kan worden), Schuimen nepbijl (in handen van de houthakker), Zaagsel (geeft op het
+                <td>Bijl (in houtblok die in het bos gevonden kan worden), Schuimen nepbijl (in handen van de houthakker), Zaagsel (geeft op het
                     pad de route aan), Bijlprothese (op het hoofd), Nepbloed, Bebloede houthakkers kleding
                 </td>
                 <td>x</td>
@@ -6069,7 +6069,7 @@
                     die ongemerkt in de bosjes meekijkt een alarm geluid af laten gaan en de leden wegjagen.
                 </td>
                 <td>Pilaar (2 stevige kisten op elkaar met doek erover), grote (rode) drukknop, paktouw, schaar, bewakerskleding, politiepet, nep
-                    pistool witte schmink, 8x laserlampjes, rookmachine, verlichting (voor bij de drukknop)
+                    pistool, witte schmink, 8x laserlampjes, rookmachine, verlichting (voor bij de drukknop)
                 </td>
                 <td>x</td>
                 <td>x</td>
@@ -6346,6 +6346,11 @@
         <div id="spookinator__trail--results">
             <!-- Will be filled with results by JS. -->
         </div>
+
+        <button id="spookinator__download-pdf">
+            <img alt="" src="src/download.svg" style="width: 25px; height: 25px">
+            <strong style="display: inline-block;transform: translateY(-5px);">Spookpad Downloaden</strong>
+        </button>
     </article>
 
     <div id="spookinator__results">
