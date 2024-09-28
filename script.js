@@ -8,12 +8,12 @@ let trail = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, needsPersons, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, theme) {
+    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
-        this.needsPersons = needsPersons;
+        this.personsNeeded = personsNeeded;
         this.preparationTime = preparationTime;
         this.buildUpTime = buildUpTime;
         this.needsElectricity = needsElectricity;
@@ -39,10 +39,10 @@ class itemClass {
 
         // display icons
         htmlString += `<span class="left">`;
-        if (this.needsPersons.length === 1) {
-            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-person.svg">`;
-        } else if (this.needsPersons.length > 1) {
-            htmlString += `<img alt="${this.needsPersons.length} Staf nodig" title="${this.needsPersons.length} Staf nodig" src="src/needs-persons.svg">`;
+        if (this.personsNeeded.length === 1) {
+            htmlString += `<img alt="${this.personsNeeded.length} persoon nodig" title="${this.personsNeeded.length} persoon nodig" src="src/person-needed.svg">`;
+        } else if (this.personsNeeded.length > 1) {
+            htmlString += `<img alt="${this.personsNeeded.length} personen nodig" title="${this.personsNeeded.length} personen nodig" src="src/persons-needed.svg">`;
         }
         if (this.needsElectricity) {
             htmlString += `<img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg">`;
@@ -174,7 +174,19 @@ function retrieveItemsFromDocument() {
 // Use this script to generate the JSON data for the API.
 function generateJSON() {
     console.log(JSON.stringify(items, (key, value) => {
-        return key === 'id' || key === 'html' || key === 'trailHtml' ? undefined : value;
+        if (key === 'id' || key === 'html' || key === 'trailHtml') {
+            return undefined;
+        }
+
+        if (key === 'personsNeeded') {
+            return value.length;
+        }
+
+        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole'].includes(key)) {
+            return !!value;
+        }
+
+        return value;
     }));
 }
 
@@ -190,7 +202,7 @@ function search() {
     let buildUpTimeXXX = document.querySelector('input[value="build-up-time-xxx"]').checked;
 
     // The following input elements are a three-way checkbox.
-    let needsPersons = document.querySelector('input[value="needs-persons"]').getAttribute('state');
+    let personsNeeded = document.querySelector('input[value="persons-needed"]').getAttribute('state');
     let needsElectricity = document.querySelector('input[value="needs-electricity"]').getAttribute('state');
     let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').getAttribute('state');
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
@@ -213,7 +225,7 @@ function search() {
         if (!buildUpTimeX && item.buildUpTime.length === 1 || !buildUpTimeXX && item.buildUpTime.length === 2 || !buildUpTimeXXX && item.buildUpTime.length === 3) {
             continue;
         }
-        if (needsPersons === 'on' && !item.needsPersons || needsPersons === 'off' && item.needsPersons) {
+        if (personsNeeded === 'on' && !item.personsNeeded || personsNeeded === 'off' && item.personsNeeded) {
             continue;
         }
         if (needsElectricity === 'on' && !item.needsElectricity || needsElectricity === 'off' && item.needsElectricity) {
@@ -285,7 +297,7 @@ function showCounter() {
     let mediumBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 2).length;
     let highPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 3).length;
     let highBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 3).length;
-    let needsPersonsCount = foundItems.filter(x => x.needsPersons.length >= 1).length;
+    let personsNeededCount = foundItems.filter(x => x.personsNeeded.length >= 1).length;
     let needsElectricityCount = foundItems.filter(x => x.needsElectricity).length;
     let needsDressingClothesCount = foundItems.filter(x => x.needsDressingClothes).length;
     let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
@@ -304,8 +316,8 @@ function showCounter() {
         `<br><span><img alt="Opbouwtijd" title="Opbouwtijd" src="src/build-up-time.svg"> ` +
         `${lowBuildUpTimeCount} / ${mediumBuildUpTimeCount} / ${highBuildUpTimeCount}` +
         `</span>` +
-        `<br><span><img alt="Personen nodig" title="Personen nodig" src="src/needs-persons.svg"> ` +
-        `<meter value="${needsPersonsCount}" max="${foundItemsCount}">${needsPersonsCount} / ${foundItemsCount}</meter>` +
+        `<br><span><img alt="Personen nodig" title="Personen nodig" src="src/persons-needed.svg"> ` +
+        `<meter value="${personsNeededCount}" max="${foundItemsCount}">${personsNeededCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg"> ` +
         `<meter value="${needsElectricityCount}" max="${foundItemsCount}">${needsElectricityCount} / ${foundItemsCount}</meter>` +
@@ -346,8 +358,8 @@ function generateTrail() {
     let trailLength = document.getElementsByName('posts')[0].value;
     let persons = document.getElementsByName('persons')[0].value;
     persons = persons > trailLength ? trailLength : persons; // Make sure persons is not bigger then trailLength
-    let trailWithPersons = foundItems.filter(item => item.needsPersons).sort(() => 0.5 - Math.random()).slice(0, persons);
-    let trailWithoutPersons = foundItems.filter(item => !item.needsPersons).sort(() => 0.5 - Math.random()).slice(0, trailLength - persons);
+    let trailWithPersons = foundItems.filter(item => item.personsNeeded).sort(() => 0.5 - Math.random()).slice(0, persons);
+    let trailWithoutPersons = foundItems.filter(item => !item.personsNeeded).sort(() => 0.5 - Math.random()).slice(0, trailLength - persons);
     trail = alternateCombine(trailWithPersons, trailWithoutPersons);
     let warningText = '';
 
@@ -465,7 +477,7 @@ window.addEventListener('DOMContentLoaded', () => {
             doc.setFontSize(fontSize);
             doc.setFont('Helvetica', 'bold');
             doc.text(item.name, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
-            doc.text(item.needsPersons.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(item.name) + 5, yMargin + (line - 1) * lineHeight);
+            doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(item.name) + 5, yMargin + (line - 1) * lineHeight);
             line++;
 
             // Add description as normal text.
