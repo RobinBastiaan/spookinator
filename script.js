@@ -402,6 +402,87 @@ function alternateCombine(array1, array2) {
 
 //</script>//2
 
+function downloadTrailPdf() {
+    const doc = new window.jspdf.jsPDF('l', 'pt', 'a4'),
+        pageWidth = doc.internal.pageSize.getWidth(),
+        pageHeight = doc.internal.pageSize.getHeight(),
+        fontSize = 12,
+        lineHeight = fontSize + 2,
+        xMargin = 15,
+        yMargin = 60,
+        indentation = 5,
+        columnWidth = (pageWidth - xMargin * 2) / 3;
+    let column = 1,
+        line = 1,
+        trailLength = document.getElementsByName('posts')[0].value,
+        persons = document.getElementsByName('persons')[0].value;
+
+    addFooterText(doc, pageWidth, xMargin, pageHeight);
+    doc.text('Spoodpad met ' + trailLength + ' posten voor ' + persons + ' personen.', xMargin, yMargin);
+    line = line + 2;
+
+    // Iterate over the JSON data and add to PDF.
+    trail.forEach((item) => {
+        doc.setFontSize(fontSize);
+
+        let descriptionText = doc.splitTextToSize(item.description, columnWidth - xMargin * 2),
+            requirementsTextLength = 0,
+            requirementsText = [];
+
+        item.requirements.forEach(requirement => {
+            let requirementText = doc.splitTextToSize(requirement, columnWidth - xMargin * 2);
+            requirementsTextLength += requirementText.length;
+            requirementsText.push(requirementText);
+        });
+
+        // Check if the line position exceeds the page height, and add a new page if necessary.
+        if ((line + descriptionText.length + requirementsTextLength) * fontSize >= pageHeight - yMargin * 3) {
+            line = 1;
+            if (column === 3) {
+                doc.addPage();
+                column = 1;
+
+                addFooterText(doc, pageWidth, xMargin, pageHeight);
+            } else {
+                column++;
+            }
+        }
+
+        // Add name as bold text.
+        doc.setFontSize(fontSize);
+        doc.setFont('Helvetica', 'bold');
+        doc.text(item.name, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
+        doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(item.name) + 5, yMargin + (line - 1) * lineHeight);
+        line++;
+
+        // Add description as normal text.
+        doc.setFont('Helvetica', 'normal');
+        doc.text(descriptionText, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
+        line += descriptionText.length;
+
+        // Add requirements as normal text.
+        doc.setFont('Helvetica', 'normal');
+        requirementsText.forEach((requirementText, index) => {
+            // For the first line of each requirement, draw a checkbox as a small square.
+            doc.rect(xMargin + (column - 1) * columnWidth + indentation, yMargin + (line - 1) * lineHeight - 6, 4, 4);
+
+            requirementText.forEach((requirementPart) => {
+                doc.text(requirementPart, xMargin + (column - 1) * columnWidth + indentation + 9, yMargin + (line - 1) * lineHeight);
+                line++;
+            });
+        });
+
+        line++;
+    });
+
+    // Disclaimer.
+    doc.setFont('Helvetica', 'italic');
+    doc.setFontSize(10);
+    doc.text('Disclaimer: Je bent altijd zelf aansprakelijk voor ongevallen of schade die kan ontstaan tijdens het gebruik van deze tool.', xMargin * 5, pageHeight - xMargin);
+
+    doc.save('spookpad.pdf');
+}
+
 //<script>//3 initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
@@ -413,9 +494,18 @@ window.addEventListener('DOMContentLoaded', () => {
         this.classList.toggle('spookinator__toggle-button--active');
         document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
     });
+    document.getElementById('spookinator__info-button').addEventListener("keypress", function () {
+        this.classList.toggle('spookinator__toggle-button--active');
+        document.getElementById('spookinator__info').classList.toggle('spookinator__item--hidden');
+    });
 
     // add show trail event listener
     document.getElementById('spookinator__trail-button').addEventListener("click", function () {
+        this.classList.toggle('spookinator__toggle-button--active');
+        document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
+        document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
+    });
+    document.getElementById('spookinator__trail-button').addEventListener("keypress", function () {
         this.classList.toggle('spookinator__toggle-button--active');
         document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
         document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
@@ -425,87 +515,15 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('spookinator__regenerate-button').addEventListener("click", function () {
         generateTrail();
     });
+    document.getElementById('spookinator__regenerate-button').addEventListener("keypress", function () {
+        generateTrail();
+    });
 
     // add download trail pdf event listener
     document.getElementById('spookinator__download-pdf').addEventListener("click", function () {
-        const doc = new window.jspdf.jsPDF('l', 'pt', 'a4'),
-            pageWidth = doc.internal.pageSize.getWidth(),
-            pageHeight = doc.internal.pageSize.getHeight(),
-            fontSize = 12,
-            lineHeight = fontSize + 2,
-            xMargin = 15,
-            yMargin = 60,
-            indentation = 5,
-            columnWidth = (pageWidth - xMargin * 2) / 3;
-        let column = 1,
-            line = 1,
-            trailLength = document.getElementsByName('posts')[0].value,
-            persons = document.getElementsByName('persons')[0].value;
-
-        addFooterText(doc, pageWidth, xMargin, pageHeight);
-        doc.text('Spoodpad met ' + trailLength + ' posten voor ' + persons + ' personen.', xMargin, yMargin);
-        line = line + 2;
-
-        // Iterate over the JSON data and add to PDF.
-        trail.forEach((item) => {
-            doc.setFontSize(fontSize);
-
-            let descriptionText = doc.splitTextToSize(item.description, columnWidth - xMargin * 2),
-                requirementsTextLength = 0,
-                requirementsText = [];
-
-            item.requirements.forEach(requirement => {
-                let requirementText = doc.splitTextToSize(requirement, columnWidth - xMargin * 2);
-                requirementsTextLength += requirementText.length;
-                requirementsText.push(requirementText);
-            });
-
-            // Check if the line position exceeds the page height, and add a new page if necessary.
-            if ((line + descriptionText.length + requirementsTextLength) * fontSize >= pageHeight - yMargin * 3) {
-                line = 1;
-                if (column === 3) {
-                    doc.addPage();
-                    column = 1;
-
-                    addFooterText(doc, pageWidth, xMargin, pageHeight);
-                } else {
-                    column++;
-                }
-            }
-
-            // Add name as bold text.
-            doc.setFontSize(fontSize);
-            doc.setFont('Helvetica', 'bold');
-            doc.text(item.name, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
-            doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(item.name) + 5, yMargin + (line - 1) * lineHeight);
-            line++;
-
-            // Add description as normal text.
-            doc.setFont('Helvetica', 'normal');
-            doc.text(descriptionText, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
-            line += descriptionText.length;
-
-            // Add requirements as normal text.
-            doc.setFont('Helvetica', 'normal');
-            requirementsText.forEach((requirementText, index) => {
-                // For the first line of each requirement, draw a checkbox as a small square.
-                doc.rect(xMargin + (column - 1) * columnWidth + indentation, yMargin + (line - 1) * lineHeight - 6, 4, 4);
-
-                requirementText.forEach((requirementPart) => {
-                    doc.text(requirementPart, xMargin + (column - 1) * columnWidth + indentation + 9, yMargin + (line - 1) * lineHeight);
-                    line++;
-                });
-            });
-
-            line++;
-        });
-
-        // Disclaimer.
-        doc.setFont('Helvetica', 'italic');
-        doc.setFontSize(10);
-        doc.text('Disclaimer: Je bent altijd zelf aansprakelijk voor ongevallen of schade die kan ontstaan tijdens het gebruik van deze tool.', xMargin * 5, pageHeight - xMargin);
-
-        doc.save('spookpad.pdf');
+        downloadTrailPdf();
+    });document.getElementById('spookinator__download-pdf').addEventListener("keypress", function () {
+        downloadTrailPdf();
     });
 
     // add search event listeners
@@ -546,4 +564,4 @@ function addFooterText(doc, pageWidth, xMargin, pageHeight) {
 
 //</script>//3
 
-module.exports = {itemClass}
+// module.exports = {itemClass}

@@ -2,13 +2,14 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0">
     <title>Spookpad</title>
     <link rel="icon" href="favicon.png">
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
     <script src="script.js" defer></script>
 
+    <meta name="description" content="Jouw bron voor inspiratie om je meest spannende en angstaanjagende tocht in het bos ooit te organiseren!">
     <meta property="og:title" content="Spookpad.nl - Creëer een onvergetelijke tocht"/>
     <meta property="og:type" content="website"/>
     <meta property="og:url" content="https://www.spookpad.nl"/>
@@ -6270,21 +6271,25 @@
         <section class="spookinator__filter-section spookinator__filter-section--small">
             <h4>Zoeken</h4>
             <div class="checkbox-container" style="padding-top: 15px;">
-                <select name="theme" class="spookinator__input--input" onchange="search()">
-                    <option value="Alles">Alles</option>
-                    <option value="Zonder thema">Zonder thema</option>
-                    <option value="Halloween">Halloween</option>
-                    <option value="Hedendaags">Hedendaags</option>
-                    <option value="Kinderwereld">Kinderwereld</option>
-                    <option value="Mythisch">Mythisch</option>
-                    <option value="Oorlog">Oorlog</option>
-                    <option value="Oosters">Oosters</option>
-                    <option value="Scherpe punten">Scherpe punten</option>
-                    <option value="Sport">Sport</option>
-                    <option value="Verleden">Verleden</option>
-                </select>
+                <label>
+                    <span class="hidden-checkbox">Search</span>
+                    <select name="theme" class="spookinator__input--input" onchange="search()">
+                        <option value="Alles">Alles</option>
+                        <option value="Zonder thema">Zonder thema</option>
+                        <option value="Halloween">Halloween</option>
+                        <option value="Hedendaags">Hedendaags</option>
+                        <option value="Kinderwereld">Kinderwereld</option>
+                        <option value="Mythisch">Mythisch</option>
+                        <option value="Oorlog">Oorlog</option>
+                        <option value="Oosters">Oosters</option>
+                        <option value="Scherpe punten">Scherpe punten</option>
+                        <option value="Sport">Sport</option>
+                        <option value="Verleden">Verleden</option>
+                    </select>
+                </label>
 
-                <input id="search" class="spookinator__input--input" type="input" name="search" onkeyup="search()" autofocus style="width: 110px">
+                <label for="search" class="hidden-checkbox">Search</label>
+                <input id="search" class="spookinator__input--input" type="text" name="search" onkeyup="search()" autofocus style="width: 110px">
             </div>
         </section>
     </article>
@@ -6292,9 +6297,9 @@
 
     <!-- Part 3: The following code needs to be placed in a plugin area, to avoid issues with PBWorks removing properties and elements. -->
     <img id="spookinator__info-button" class="spookinator__toggle-button vertical-align right" src="src/info.svg" alt="Tips bij het samenstellen van een spookpad"
-         title="Tips bij het samenstellen van een spookpad">
+         title="Tips bij het samenstellen van een spookpad" tabindex="1">
     <img id="spookinator__trail-button" class="spookinator__toggle-button vertical-align right" src="src/trail.svg" alt="Maak een spookpad"
-         title="Maak een spookpad">
+         title="Maak een spookpad" tabindex="1">
     <h4 id="spookinator__item-counter" tabindex="1"><span id="js-item-counter"></span></h4>
     <div style="clear: both;"></div>
 
