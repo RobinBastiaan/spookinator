@@ -47,7 +47,7 @@ input {
 }
 
 .flex {
-    display:flex;
+    display: flex;
     justify-content: center;
 }
 
@@ -159,8 +159,8 @@ input {
 }
 
 img {
-    height: 32px;
-    width: 32px;
+    height: 34px;
+    width: 34px;
 }
 
 .spookinator__item img,
@@ -226,6 +226,7 @@ img {
     color: var(--text-color);
     margin-left: 20px;
 }
+
 /*</style>*//*0*/
 
 /*<style>*//*1*/
@@ -240,7 +241,7 @@ img {
 
 label.label-checkbox {
     display: inline-block;
-    padding: 8px 5px;
+    padding: 8px 4px;
 }
 
 .label-checkbox > input[type='checkbox'] + img {
@@ -275,6 +276,33 @@ label.label-checkbox {
 
 .checkbox-container input[type='number'] {
     max-width: 100px;
+}
+
+/* Quantity gauge */
+.gauge {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+}
+
+.gauge__level {
+    width: 8px;
+    height: 4px;
+    border: 2px solid var(--text-color);
+    border-radius: 16px;
+    border-color: var(--highlight-color);
+}
+
+.gauge__level--full {
+    background-color: var(--highlight-color);
+}
+
+.label-checkbox input.hidden-checkbox:checked ~ .gauge .gauge__level {
+    border-color: var(--text-color);
+}
+
+.label-checkbox input.hidden-checkbox:checked ~ .gauge .gauge__level--full {
+    background-color: var(--text-color);
 }
 
 /* Media query for mobile screens */
@@ -460,4 +488,5 @@ label.label-checkbox {
         transform: translateY(-30px);
     }
 }
+
 /*</style>*//*1*/
