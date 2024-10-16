@@ -8,7 +8,7 @@ let trail = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, theme) {
+    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, hasConsumption, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -24,6 +24,7 @@ class itemClass {
         this.containsGore = containsGore;
         this.pioneering = pioneering;
         this.needsHole = needsHole;
+        this.hasConsumption = hasConsumption;
         this.theme = theme;
         this.html = this.buildHtml();
         this.trailHtml = this.buildHtml(true);
@@ -67,6 +68,9 @@ class itemClass {
         }
         if (this.needsHole) {
             htmlString += `<img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg">`;
+        }
+        if (this.hasConsumption) {
+            htmlString += `<img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg">`;
         }
         htmlString += `</span>`;
 
@@ -140,9 +144,13 @@ function retrieveItemsFromDocument() {
     let resultHTML = '';
 
     for (let i = 1; i < len; i++) {
+        if (!children.children[i].children[15]) {
+            console.warn('Did not find column enough columns for item ' + i + ' (' + children.children[i].children[0].innerHTML + ').');
+        }
+
         let valueToPush = [];
-        for (let column = 0; column <= 14; column++) {
-            if (column === 2 || column === 14) { // these columns can have multiple entries separated by commas
+        for (let column = 0; column <= 15; column++) {
+            if (column === 2 || column === 15) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     let str = sanitizeInput(item);
                     return str.charAt(0).toUpperCase() + str.slice(1); // Capitalize the first letter.
@@ -171,7 +179,7 @@ function retrieveItemsFromDocument() {
     document.querySelector('#spookinator__results').innerHTML += resultHTML;
 }
 
-// Use this script to generate the JSON data for the API.
+// Use this script to generate the export JSON data for the API.
 function generateJSON() {
     console.log(JSON.stringify(items, (key, value) => {
         if (key === 'id' || key === 'html' || key === 'trailHtml') {
@@ -182,7 +190,7 @@ function generateJSON() {
             return value.length;
         }
 
-        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole'].includes(key)) {
+        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole', 'hasConsumption'].includes(key)) {
             return !!value;
         }
 
@@ -211,6 +219,7 @@ function search() {
     let containsGore = document.querySelector('input[value="contains-gore"]').getAttribute('state');
     let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
     let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
+    let hasConsumption = document.querySelector('input[value="has-consumption"]').getAttribute('state');
 
     let theme = document.querySelector('select[name="theme"]').value;
 
@@ -250,6 +259,9 @@ function search() {
             continue;
         }
         if (needsHole === 'on' && !item.needsHole || needsHole === 'off' && item.needsHole) {
+            continue;
+        }
+        if (hasConsumption === 'on' && !item.hasConsumption || hasConsumption === 'off' && item.hasConsumption) {
             continue;
         }
         if (theme !== 'Alles' && theme !== 'Zonder thema' && !item.theme.join().includes(theme) || theme === 'Zonder thema' && item.theme.join() !== '') {
@@ -306,6 +318,7 @@ function showCounter() {
     let containsGoreCount = foundItems.filter(x => x.containsGore).length;
     let pioneeringCount = foundItems.filter(x => x.pioneering).length;
     let needsHoleCount = foundItems.filter(x => x.needsHole).length;
+    let hasConsumptionCount = foundItems.filter(x => x.hasConsumption).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
         ` <img class="right" alt="Zie meer" src="src/down.svg">` +
@@ -342,6 +355,9 @@ function showCounter() {
         `</span>` +
         `<br><span><img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg"> ` +
         `<meter value="${needsHoleCount}" max="${foundItemsCount}">${needsHoleCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg"> ` +
+        `<meter value="${hasConsumptionCount}" max="${foundItemsCount}">${hasConsumptionCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `</span>`;
 

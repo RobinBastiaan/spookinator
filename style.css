@@ -49,6 +49,7 @@ input {
 .flex {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .vertical-align {
@@ -331,7 +332,6 @@ label.label-checkbox {
 .spookinator__toggle--hidden-div,
 #spookinator__item-counter__stats {
     display: none;
-    max-height: 0;
 }
 
 #spookinator__item-counter__stats span {
@@ -343,14 +343,12 @@ label.label-checkbox {
 .spookinator__toggle:focus .spookinator__toggle--hidden-div,
 #spookinator__item-counter:focus #spookinator__item-counter__stats {
     display: block;
-    max-height: 200px;
     line-height: 1em;
     animation: toggle-animation 0.5s both ease-in-out;
 }
 
 #spookinator__trail .spookinator__toggle--hidden-div {
     display: block;
-    max-height: 200px;
     line-height: 1em;
 }
 
