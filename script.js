@@ -383,8 +383,8 @@ function showCounter() {
 }
 
 function generateTrail() {
-    let trailLength = document.getElementsByName('posts')[0].value;
-    let persons = document.getElementsByName('persons')[0].value;
+    let trailLength = parseInt(document.getElementsByName('posts')[0].value);
+    let persons = parseInt(document.getElementsByName('persons')[0].value);
     persons = persons > trailLength ? trailLength : persons; // Make sure persons is not bigger then trailLength
     let trailWithPersons = foundItems.filter(item => item.personsNeeded).sort(() => 0.5 - Math.random()).slice(0, persons);
     let trailWithoutPersons = foundItems.filter(item => !item.personsNeeded).sort(() => 0.5 - Math.random()).slice(0, trailLength - persons);
