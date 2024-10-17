@@ -8,7 +8,7 @@ let trail = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, hasConsumption, theme) {
+    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, hasConsumption, route, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -25,6 +25,7 @@ class itemClass {
         this.pioneering = pioneering;
         this.needsHole = needsHole;
         this.hasConsumption = hasConsumption;
+        this.route = route;
         this.theme = theme;
         this.html = this.buildHtml();
         this.trailHtml = this.buildHtml(true);
@@ -71,6 +72,9 @@ class itemClass {
         }
         if (this.hasConsumption) {
             htmlString += `<img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg">`;
+        }
+        if (this.route) {
+            htmlString += `<img alt="Route" title="Route" src="src/route.svg">`;
         }
         htmlString += `</span>`;
 
@@ -144,13 +148,13 @@ function retrieveItemsFromDocument() {
     let resultHTML = '';
 
     for (let i = 1; i < len; i++) {
-        if (!children.children[i].children[15]) {
+        if (!children.children[i].children[16]) {
             console.warn('Did not find column enough columns for item ' + i + ' (' + children.children[i].children[0].innerHTML + ').');
         }
 
         let valueToPush = [];
-        for (let column = 0; column <= 15; column++) {
-            if (column === 2 || column === 15) { // these columns can have multiple entries separated by commas
+        for (let column = 0; column <= 16; column++) {
+            if (column === 2 || column === 16) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     let str = sanitizeInput(item);
                     return str.charAt(0).toUpperCase() + str.slice(1); // Capitalize the first letter.
@@ -190,7 +194,7 @@ function generateJSON() {
             return value.length;
         }
 
-        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole', 'hasConsumption'].includes(key)) {
+        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole', 'hasConsumption', 'route'].includes(key)) {
             return !!value;
         }
 
@@ -220,6 +224,7 @@ function search() {
     let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
     let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
     let hasConsumption = document.querySelector('input[value="has-consumption"]').getAttribute('state');
+    let route = document.querySelector('input[value="route"]').getAttribute('state');
 
     let theme = document.querySelector('select[name="theme"]').value;
 
@@ -262,6 +267,9 @@ function search() {
             continue;
         }
         if (hasConsumption === 'on' && !item.hasConsumption || hasConsumption === 'off' && item.hasConsumption) {
+            continue;
+        }
+        if (route === 'on' && !item.route || route === 'off' && item.route) {
             continue;
         }
         if (theme !== 'Alles' && theme !== 'Zonder thema' && !item.theme.join().includes(theme) || theme === 'Zonder thema' && item.theme.join() !== '') {
@@ -319,6 +327,7 @@ function showCounter() {
     let pioneeringCount = foundItems.filter(x => x.pioneering).length;
     let needsHoleCount = foundItems.filter(x => x.needsHole).length;
     let hasConsumptionCount = foundItems.filter(x => x.hasConsumption).length;
+    let routeCount = foundItems.filter(x => x.route).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
         ` <img class="right" alt="Zie meer" src="src/down.svg">` +
@@ -358,6 +367,9 @@ function showCounter() {
         `</span>` +
         `<br><span><img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg"> ` +
         `<meter value="${hasConsumptionCount}" max="${foundItemsCount}">${hasConsumptionCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Route" title="Route" src="src/route.svg"> ` +
+        `<meter value="${routeCount}" max="${foundItemsCount}">${routeCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `</span>`;
 
