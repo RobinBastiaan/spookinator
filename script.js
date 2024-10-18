@@ -8,24 +8,29 @@ let trail = [];
 let maxRange = 3;
 
 class itemClass {
-    constructor(id, name, description, requirements, personsNeeded, preparationTime, buildUpTime, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, wheelchairAccessible, containsGore, pioneering, needsHole, hasConsumption, route, theme) {
+    constructor(id, name, description, requirements, preparationTime, buildUpTime,
+                personsNeeded, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, pioneering, needsHole,
+                wheelchairAccessible, containsGore, hasConsumption, route, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
         this.requirements = requirements;
-        this.personsNeeded = personsNeeded;
         this.preparationTime = preparationTime;
         this.buildUpTime = buildUpTime;
+
+        this.personsNeeded = personsNeeded;
         this.needsElectricity = needsElectricity;
         this.needsDressingClothes = needsDressingClothes;
         this.needsFacePaint = needsFacePaint;
         this.isPortable = isPortable;
-        this.wheelchairAccessible = wheelchairAccessible;
-        this.containsGore = containsGore;
         this.pioneering = pioneering;
         this.needsHole = needsHole;
+
+        this.wheelchairAccessible = wheelchairAccessible;
+        this.containsGore = containsGore;
         this.hasConsumption = hasConsumption;
         this.route = route;
+
         this.theme = theme;
         this.html = this.buildHtml();
         this.trailHtml = this.buildHtml(true);
@@ -58,17 +63,20 @@ class itemClass {
         if (this.isPortable) {
             htmlString += `<img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg">`;
         }
-        if (this.wheelchairAccessible) {
-            htmlString += `<img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg">`;
-        }
-        if (this.containsGore) {
-            htmlString += `<img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg">`;
-        }
         if (this.pioneering) {
             htmlString += `<img alt="Pionieren" title="Pionieren" src="src/pioneering.svg">`;
         }
         if (this.needsHole) {
             htmlString += `<img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg">`;
+        }
+
+        htmlString += `<br>`;
+
+        if (this.wheelchairAccessible) {
+            htmlString += `<img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg">`;
+        }
+        if (this.containsGore) {
+            htmlString += `<img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg">`;
         }
         if (this.hasConsumption) {
             htmlString += `<img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg">`;
@@ -159,7 +167,7 @@ function retrieveItemsFromDocument() {
                     let str = sanitizeInput(item);
                     return str.charAt(0).toUpperCase() + str.slice(1); // Capitalize the first letter.
                 });
-            } else if (column === 4 || column === 5) { // these columns contain a ranged input
+            } else if (column === 3 || column === 4) { // these columns contain a ranged input
                 valueToPush[column] = sanitizeRangeInput(children.children[i].children[column].innerHTML);
             } else if (children.children[i].children[column]) {
                 valueToPush[column] = sanitizeInput(children.children[i].children[column].innerHTML);
@@ -185,21 +193,31 @@ function retrieveItemsFromDocument() {
 
 // Use this script to generate the export JSON data for the API.
 function generateJSON() {
-    console.log(JSON.stringify(items, (key, value) => {
-        if (key === 'id' || key === 'html' || key === 'trailHtml') {
-            return undefined;
-        }
-
-        if (key === 'personsNeeded') {
-            return value.length;
-        }
-
-        if (['needsElectricity', 'needsDressingClothes', 'needsFacePaint', 'isPortable', 'wheelchairAccessible', 'containsGore', 'pioneering', 'needsHole', 'hasConsumption', 'route'].includes(key)) {
-            return !!value;
-        }
-
-        return value;
-    }));
+    console.log(JSON.stringify(items.map(item => {
+        return {
+            name: item.name,
+            description: item.description,
+            requirements: item.requirements,
+            preparationTime: item.preparationTime,
+            buildUpTime: item.buildUpTime,
+            needs: {
+                personsNeeded: item.personsNeeded.length,
+                needsElectricity: !!item.needsElectricity,
+                needsDressingClothes: !!item.needsDressingClothes,
+                needsFacePaint: !!item.needsFacePaint,
+                isPortable: !!item.isPortable,
+                pioneering: !!item.pioneering,
+                needsHole: !!item.needsHole,
+            },
+            experience: {
+                wheelchairAccessible: !!item.wheelchairAccessible,
+                containsGore: !!item.containsGore,
+                hasConsumption: !!item.hasConsumption,
+                route: !!item.route,
+            },
+            theme: item.theme,
+        };
+    })));
 }
 
 // search for the programs
@@ -219,10 +237,11 @@ function search() {
     let needsDressingClothes = document.querySelector('input[value="needs-dressing-clothes"]').getAttribute('state');
     let needsFacePaint = document.querySelector('input[value="needs-face-paint"]').getAttribute('state');
     let isPortable = document.querySelector('input[value="is-portable"]').getAttribute('state');
-    let wheelchairAccessible = document.querySelector('input[value="wheelchair-accessible"]').getAttribute('state');
-    let containsGore = document.querySelector('input[value="contains-gore"]').getAttribute('state');
     let pioneering = document.querySelector('input[value="pioneering"]').getAttribute('state');
     let needsHole = document.querySelector('input[value="needs-hole"]').getAttribute('state');
+    // --
+    let wheelchairAccessible = document.querySelector('input[value="wheelchair-accessible"]').getAttribute('state');
+    let containsGore = document.querySelector('input[value="contains-gore"]').getAttribute('state');
     let hasConsumption = document.querySelector('input[value="has-consumption"]').getAttribute('state');
     let route = document.querySelector('input[value="route"]').getAttribute('state');
 
@@ -254,16 +273,16 @@ function search() {
         if (isPortable === 'on' && !item.isPortable || isPortable === 'off' && item.isPortable) {
             continue;
         }
-        if (wheelchairAccessible === 'on' && !item.wheelchairAccessible || wheelchairAccessible === 'off' && item.wheelchairAccessible) {
-            continue;
-        }
-        if (containsGore === 'on' && !item.containsGore || containsGore === 'off' && item.containsGore) {
-            continue;
-        }
         if (pioneering === 'on' && !item.pioneering || pioneering === 'off' && item.pioneering) {
             continue;
         }
         if (needsHole === 'on' && !item.needsHole || needsHole === 'off' && item.needsHole) {
+            continue;
+        }
+        if (wheelchairAccessible === 'on' && !item.wheelchairAccessible || wheelchairAccessible === 'off' && item.wheelchairAccessible) {
+            continue;
+        }
+        if (containsGore === 'on' && !item.containsGore || containsGore === 'off' && item.containsGore) {
             continue;
         }
         if (hasConsumption === 'on' && !item.hasConsumption || hasConsumption === 'off' && item.hasConsumption) {
@@ -317,15 +336,17 @@ function showCounter() {
     let mediumBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 2).length;
     let highPreparationTimeCount = foundItems.filter(x => x.preparationTime.length === 3).length;
     let highBuildUpTimeCount = foundItems.filter(x => x.buildUpTime.length === 3).length;
+
     let personsNeededCount = foundItems.filter(x => x.personsNeeded.length >= 1).length;
     let needsElectricityCount = foundItems.filter(x => x.needsElectricity).length;
     let needsDressingClothesCount = foundItems.filter(x => x.needsDressingClothes).length;
     let needsFacePaintCount = foundItems.filter(x => x.needsFacePaint).length;
     let isPortableCount = foundItems.filter(x => x.isPortable).length;
-    let wheelchairAccessibleCount = foundItems.filter(x => x.wheelchairAccessible).length;
-    let containsGoreCount = foundItems.filter(x => x.containsGore).length;
     let pioneeringCount = foundItems.filter(x => x.pioneering).length;
     let needsHoleCount = foundItems.filter(x => x.needsHole).length;
+
+    let wheelchairAccessibleCount = foundItems.filter(x => x.wheelchairAccessible).length;
+    let containsGoreCount = foundItems.filter(x => x.containsGore).length;
     let hasConsumptionCount = foundItems.filter(x => x.hasConsumption).length;
     let routeCount = foundItems.filter(x => x.route).length;
 
@@ -338,7 +359,7 @@ function showCounter() {
         `<br><span><img alt="Opbouwtijd" title="Opbouwtijd" src="src/build-up-time.svg"> ` +
         `${lowBuildUpTimeCount} / ${mediumBuildUpTimeCount} / ${highBuildUpTimeCount}` +
         `</span>` +
-        `<br><span><img alt="Personen nodig" title="Personen nodig" src="src/persons-needed.svg"> ` +
+        `<br><span style="display: inline-block;margin-top:10px"><img alt="Personen nodig" title="Personen nodig" src="src/persons-needed.svg"> ` +
         `<meter value="${personsNeededCount}" max="${foundItemsCount}">${personsNeededCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Electra nodig" title="Electra nodig" src="src/needs-electricity.svg"> ` +
@@ -353,17 +374,17 @@ function showCounter() {
         `<br><span><img alt="Draagbaar" title="Draagbaar" src="src/is-portable.svg"> ` +
         `<meter value="${isPortableCount}" max="${foundItemsCount}">${isPortableCount} / ${foundItemsCount}</meter>` +
         `</span>` +
-        `<br><span><img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg"> ` +
-        `<meter value="${wheelchairAccessibleCount}" max="${foundItemsCount}">${wheelchairAccessibleCount} / ${foundItemsCount}</meter>` +
-        `</span>` +
-        `<br><span><img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg"> ` +
-        `<meter value="${containsGoreCount}" max="${foundItemsCount}">${containsGoreCount} / ${foundItemsCount}</meter>` +
-        `</span>` +
         `<br><span><img alt="Pionieren" title="Pionieren" src="src/pioneering.svg"> ` +
         `<meter value="${pioneeringCount}" max="${foundItemsCount}">${pioneeringCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Gegraven gat nodig" title="Gegraven gat nodig" src="src/needs-hole.svg"> ` +
         `<meter value="${needsHoleCount}" max="${foundItemsCount}">${needsHoleCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span style="display: inline-block;margin-top:10px"><img alt="Rolstoel toegankelijk" title="Rolstoel toegankelijk" src="src/wheelchair-accessible.svg"> ` +
+        `<meter value="${wheelchairAccessibleCount}" max="${foundItemsCount}">${wheelchairAccessibleCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Bloed en/of gore" title="Bloed en/of gore" src="src/contains-gore.svg"> ` +
+        `<meter value="${containsGoreCount}" max="${foundItemsCount}">${containsGoreCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `<br><span><img alt="Eten en drinken" title="Eten en drinken" src="src/has-consumption.svg"> ` +
         `<meter value="${hasConsumptionCount}" max="${foundItemsCount}">${hasConsumptionCount} / ${foundItemsCount}</meter>` +

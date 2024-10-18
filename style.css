@@ -186,7 +186,7 @@ img {
     position: relative;
     margin: 60px auto 0;
     padding: 0;
-    max-width: 960px;
+    max-width: 1280px;
     overflow: hidden;
     color: var(--text-color);
     display: flex;
@@ -336,7 +336,7 @@ label.label-checkbox {
 
 #spookinator__item-counter__stats span {
     display: inline-block;
-    width: 110px;
+    width: 120px;
     text-align: left;
 }
 
