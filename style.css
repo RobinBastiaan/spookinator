@@ -228,6 +228,15 @@ img {
     margin-left: 20px;
 }
 
+.spookinator__article {
+    position: relative;
+    margin: 60px auto 0;
+    padding: 0;
+    max-width: 870px;
+    color: var(--text-color);
+    border-radius: 10px;
+}
+
 /*</style>*//*0*/
 
 /*<style>*//*1*/
