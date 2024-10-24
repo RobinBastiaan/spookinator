@@ -559,6 +559,12 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
         document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
     });
+    // show trail when a specific url parameter is present
+    if (new URLSearchParams(window.location.search).get('show-trail') === '') {
+        document.getElementById('spookinator__trail-button').classList.toggle('spookinator__toggle-button--active');
+        document.getElementById('spookinator__trail').classList.toggle('spookinator__item--hidden');
+        document.getElementById('spookinator__results').classList.toggle('spookinator__item--hidden');
+    }
 
     // add regenerate trail event listener
     document.getElementById('spookinator__regenerate-button').addEventListener("click", function () {
