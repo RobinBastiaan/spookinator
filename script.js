@@ -10,7 +10,7 @@ let maxRange = 3;
 class itemClass {
     constructor(id, name, description, requirements, preparationTime, buildUpTime,
                 personsNeeded, needsElectricity, needsDressingClothes, needsFacePaint, isPortable, pioneering, needsHole,
-                wheelchairAccessible, containsGore, hasConsumption, route, theme) {
+                wheelchairAccessible, containsGore, hasConsumption, route, interaction, theme) {
         this.id = 'item' + id;
         this.name = name;
         this.description = description;
@@ -30,6 +30,7 @@ class itemClass {
         this.containsGore = containsGore;
         this.hasConsumption = hasConsumption;
         this.route = route;
+        this.interaction = interaction;
 
         this.theme = theme;
         this.html = this.buildHtml();
@@ -83,6 +84,9 @@ class itemClass {
         }
         if (this.route) {
             htmlString += `<img alt="Route" title="Route" src="src/route.svg">`;
+        }
+        if (this.interaction) {
+            htmlString += `<img alt="Interactie" title="Interactie" src="src/interaction.svg">`;
         }
         htmlString += `</span>`;
 
@@ -156,13 +160,14 @@ function retrieveItemsFromDocument() {
     let resultHTML = '';
 
     for (let i = 1; i < len; i++) {
-        if (!children.children[i].children[16]) {
-            console.warn('Did not find column enough columns for item ' + i + ' (' + children.children[i].children[0].innerHTML + ').');
+        if (!children.children[i].children[17]) {
+            console.warn('Did not find enough columns for item ' + i + ' (' + children.children[i].children[0].innerHTML + ').');
+            continue;
         }
 
         let valueToPush = [];
-        for (let column = 0; column <= 16; column++) {
-            if (column === 2 || column === 16) { // these columns can have multiple entries separated by commas
+        for (let column = 0; column <= 17; column++) {
+            if (column === 2 || column === 17) { // these columns can have multiple entries separated by commas
                 valueToPush[column] = children.children[i].children[column].innerHTML.split(',').map(function (item) {
                     let str = sanitizeInput(item);
                     return str.charAt(0).toUpperCase() + str.slice(1); // Capitalize the first letter.
@@ -214,6 +219,7 @@ function generateJSON() {
                 containsGore: !!item.containsGore,
                 hasConsumption: !!item.hasConsumption,
                 route: !!item.route,
+                interaction: !!item.interaction,
             },
             theme: item.theme,
         };
@@ -244,6 +250,7 @@ function search() {
     let containsGore = document.querySelector('input[value="contains-gore"]').getAttribute('state');
     let hasConsumption = document.querySelector('input[value="has-consumption"]').getAttribute('state');
     let route = document.querySelector('input[value="route"]').getAttribute('state');
+    let interaction = document.querySelector('input[value="interaction"]').getAttribute('state');
 
     let theme = document.querySelector('select[name="theme"]').value;
 
@@ -289,6 +296,9 @@ function search() {
             continue;
         }
         if (route === 'on' && !item.route || route === 'off' && item.route) {
+            continue;
+        }
+        if (interaction === 'on' && !item.interaction || interaction === 'off' && item.interaction) {
             continue;
         }
         if (theme !== 'Alles' && theme !== 'Zonder thema' && !item.theme.join().includes(theme) || theme === 'Zonder thema' && item.theme.join() !== '') {
@@ -349,6 +359,7 @@ function showCounter() {
     let containsGoreCount = foundItems.filter(x => x.containsGore).length;
     let hasConsumptionCount = foundItems.filter(x => x.hasConsumption).length;
     let routeCount = foundItems.filter(x => x.route).length;
+    let interactionCount = foundItems.filter(x => x.interaction).length;
 
     foundElement.innerHTML = foundItemsCount.toString() + ' resultaten' +
         ` <img class="right" alt="Zie meer" src="src/down.svg">` +
@@ -391,6 +402,9 @@ function showCounter() {
         `</span>` +
         `<br><span><img alt="Route" title="Route" src="src/route.svg"> ` +
         `<meter value="${routeCount}" max="${foundItemsCount}">${routeCount} / ${foundItemsCount}</meter>` +
+        `</span>` +
+        `<br><span><img alt="Interactie" title="Interactie" src="src/interaction.svg"> ` +
+        `<meter value="${interactionCount}" max="${foundItemsCount}">${interactionCount} / ${foundItemsCount}</meter>` +
         `</span>` +
         `</span>`;
 
