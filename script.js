@@ -130,11 +130,11 @@ class itemClass {
 // to make sure some input transformations are correct
 function sanitizeInput(input) {
     return input
-        .trim() // Remove leading and trailing spaces
         .replace(/&amp;/g, '&') // Replace '&amp;' with '&'
         .replace(/&nbsp;/g, ' ') // Replace '&nbsp;' with a space
         .replace(/\s+/g, ' ') // Replace multiple spaces and newlines with a single space
-        .replace(/\n/g, ''); // Remove newline characters
+        .replace(/\n/g, '') // Remove newline characters
+        .trim(); // Remove leading and trailing spaces
 }
 
 // additional sanitation rules for ranged input
