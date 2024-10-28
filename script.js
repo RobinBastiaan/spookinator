@@ -124,6 +124,9 @@ class itemClass {
     }
 }
 
+//</script>//0
+
+//<script>//1 display the items with their values
 // to make sure some input transformations are correct
 function sanitizeInput(input) {
     return input
@@ -143,9 +146,6 @@ function sanitizeRangeInput(input) {
     return sanitizedInput.length === 0 ? 'x' : (sanitizedInput.length > maxRange ? 'xxx' : sanitizedInput);
 }
 
-//</script>//0
-
-//<script>//1 display the items with their values
 function show(id) {
     document.getElementById(id).classList.remove('spookinator__item--hidden');
 }
@@ -226,6 +226,9 @@ function generateJSON() {
     })));
 }
 
+//</script>//1
+
+//<script>//2
 // search for the programs
 function search() {
     foundItems = [];
@@ -318,9 +321,10 @@ function search() {
     generateTrail();
 }
 
-//</script>//1
+//</script>//2
 
-//<script>//2 display the programs with their values
+//<script>//3
+// display the programs with their values
 function showItems() {
     if (!foundItems) {
         return;
@@ -416,7 +420,9 @@ function showCounter() {
     void foundElement.offsetWidth;
     foundElement.classList.add('update-counter');
 }
+//</script>//3
 
+//<script>//4
 function generateTrail() {
     let trailLength = parseInt(document.getElementsByName('posts')[0].value);
     let persons = parseInt(document.getElementsByName('persons')[0].value);
@@ -463,8 +469,9 @@ function alternateCombine(array1, array2) {
     return result;
 }
 
-//</script>//2
+//</script>//4
 
+//<script>//5
 function downloadTrailPdf() {
     const doc = new window.jspdf.jsPDF('l', 'pt', 'a4'),
         pageWidth = doc.internal.pageSize.getWidth(),
@@ -546,7 +553,9 @@ function downloadTrailPdf() {
     doc.save('spookpad.pdf');
 }
 
-//<script>//3 initial function calls and eventListeners
+//</script>//5
+
+//<script>//6 initial function calls and eventListeners
 window.addEventListener('DOMContentLoaded', () => {
     retrieveItemsFromDocument();
     search();
@@ -591,7 +600,8 @@ window.addEventListener('DOMContentLoaded', () => {
     // add download trail pdf event listener
     document.getElementById('spookinator__download-pdf').addEventListener("click", function () {
         downloadTrailPdf();
-    });document.getElementById('spookinator__download-pdf').addEventListener("keypress", function () {
+    });
+    document.getElementById('spookinator__download-pdf').addEventListener("keypress", function () {
         downloadTrailPdf();
     });
 
@@ -631,6 +641,6 @@ function addFooterText(doc, pageWidth, xMargin, pageHeight) {
     doc.textWithLink('Pagina ' + doc.internal.getNumberOfPages(), xMargin, yPosition, {url: 'https://spookpad.nl/'});
 }
 
-//</script>//3
+//</script>//6
 
 // module.exports = {itemClass}
