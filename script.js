@@ -131,6 +131,7 @@ class itemClass {
 function sanitizeInput(input) {
     return input
         .replace(/&amp;/g, '&') // Replace '&amp;' with '&'
+        .replace(/&gt;/g, '>') // Replace '&gt;' with '>'
         .replace(/&nbsp;/g, ' ') // Replace '&nbsp;' with a space
         .replace(/\s+/g, ' ') // Replace multiple spaces and newlines with a single space
         .replace(/\n/g, '') // Remove newline characters
@@ -488,16 +489,17 @@ function downloadTrailPdf() {
         persons = document.getElementsByName('persons')[0].value;
 
     addFooterText(doc, pageWidth, xMargin, pageHeight);
-    doc.text('Spoodpad met ' + trailLength + ' posten voor ' + persons + ' personen.', xMargin, yMargin);
+    doc.text('Spookpad met ' + trailLength + ' posten voor ' + persons + ' personen.', xMargin, yMargin);
     line = line + 2;
 
     // Iterate over the JSON data and add to PDF.
-    trail.forEach((item) => {
+    trail.forEach((item, index) => {
         doc.setFontSize(fontSize);
 
         let descriptionText = doc.splitTextToSize(item.description, columnWidth - xMargin * 2),
             requirementsTextLength = 0,
-            requirementsText = [];
+            requirementsText = [],
+            itemName = index + 1 + '. ' + item.name;
 
         item.requirements.forEach(requirement => {
             let requirementText = doc.splitTextToSize(requirement, columnWidth - xMargin * 2);
@@ -521,8 +523,8 @@ function downloadTrailPdf() {
         // Add name as bold text.
         doc.setFontSize(fontSize);
         doc.setFont('Helvetica', 'bold');
-        doc.text(item.name, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
-        doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(item.name) + 5, yMargin + (line - 1) * lineHeight);
+        doc.text(itemName, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
+        doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(itemName) + 5, yMargin + (line - 1) * lineHeight);
         line++;
 
         // Add description as normal text.
