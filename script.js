@@ -492,6 +492,15 @@ function downloadTrailPdf() {
     doc.text('Spookpad met ' + trailLength + ' posten voor ' + persons + ' personen.', xMargin, yMargin);
     line = line + 2;
 
+    // Add empty posts when the search resulted trail was smaller than trailLength.
+    if (trailLength > trail.length) {
+        trail = trail.concat(Array(trailLength - trail.length).fill({
+            name: '………………………………',
+            description: '………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………………',
+            requirements: Array(5).fill('…………………………'),
+        }));
+    }
+
     // Iterate over the JSON data and add to PDF.
     trail.forEach((item, index) => {
         doc.setFontSize(fontSize);
@@ -524,7 +533,9 @@ function downloadTrailPdf() {
         doc.setFontSize(fontSize);
         doc.setFont('Helvetica', 'bold');
         doc.text(itemName, xMargin + (column - 1) * columnWidth, yMargin + (line - 1) * lineHeight);
-        doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(itemName) + 5, yMargin + (line - 1) * lineHeight);
+        if (Object.hasOwn(item, 'personsNeeded')) { // Empty trail fillers do not have this property to allow users to fill it in according to their own insight.
+            doc.text(item.personsNeeded.length > 0 ? '(bemand)' : '(onbemand)', xMargin + (column - 1) * columnWidth + doc.getTextWidth(itemName) + 5, yMargin + (line - 1) * lineHeight);
+        }
         line++;
 
         // Add description as normal text.
