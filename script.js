@@ -193,7 +193,6 @@ function retrieveItemsFromDocument() {
     // sort alphabetically
     items.sort((a, b) => a.name.localeCompare(b.name));
     resultHTML += items.map(item => item.html).join(' ');
-
     document.querySelector('#spookinator__results').innerHTML += resultHTML;
 }
 
